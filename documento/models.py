@@ -192,6 +192,16 @@ class Documento(models.Model, utils.Texto):
         de la otra moneda.
         """
         try:
+            if (self.entrada.moneda.is_principal):
+                return self.tasa_salida
+        except (BaseException) as e:
+            print(e)
+        try:
+            if (self.salida.moneda.is_principal):
+                return self.tasa_entrada
+        except (BaseException) as e:
+            print(e)
+        try:
             return self.monto_salida / self.monto_entrada
         except (ZeroDivisionError):
             return 0
