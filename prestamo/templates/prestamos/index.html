@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+
+
+
+
+
+
+
+{% block header %}
+
+{% endblock header %}
+    
+
+
+
+{% block content %}
+    <div class="margin0px center">
+        {% for link in links.GetGroups.prestamos %}
+            <a class="post" href="{{ link.Url }}">
+                <div>
+                    <img src="{{ link.GetImg }}" alt="{{ link.name }}">
+                    <h2>{{ link }}</h2>
+                    <p>{{ link.description }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+        
+
+
+{% endblock content %}

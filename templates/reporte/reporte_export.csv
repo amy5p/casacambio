@@ -1,0 +1,10 @@
+
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    {{ reporte }}
+
+{% endblock %}

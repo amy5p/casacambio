@@ -1,0 +1,798 @@
+
+/* Basic */
+@-ms-viewport {
+  width: device-width; }
+body {
+  -ms-overflow-style: scrollbar; 
+  font-family: calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  line-height: 1;
+  -webkit-text-size-adjust: none;
+  padding: 20px;
+  background: #bbb;
+}
+
+@media screen and (max-width: 480px) {
+  html, body {
+    min-width: 320px; } }
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+
+
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+
+
+blockquote, q {
+  quotes: none; }
+  blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none; 
+  }
+
+header {
+  background: white;
+  width: 100%;
+  padding-top: 20px;
+}
+header .logo img {
+  height: 90px;
+  width: auto;
+}
+#heading {
+  background: white;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+#main {
+  background: white;
+  padding: 10px;
+  min-height: 600px;
+}
+
+
+
+
+/* COLORES -----------*/
+.color5 {
+  background: #ffffaa;
+  color: #222;
+}
+
+
+
+
+
+
+/* NAV ---------------*/
+nav {
+  position: fixed;
+  z-index: 9999;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  -webkit-box-shadow: 0px 6px 6px 3px rgba(0,0,0,0.14);
+  -moz-box-shadow: 0px 6px 6px 3px rgba(0,0,0,0.14);
+  box-shadow: 0px 6px 6px 3px rgba(0,0,0,0.14);
+}
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+nav li {
+  float: left;
+  border-left: 1px solid rgb(80, 80, 80);
+}
+
+nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+nav li ul {
+  display:none;
+  position:absolute;
+  min-width:140px;
+}
+nav li ul li {
+  clear: left;
+  width: 100%;
+}
+nav li ul li a {
+  text-align: left;
+}
+nav li:hover > ul {
+  display: block;
+}
+nav li a:hover {
+  background: #111;
+}
+nav li a img {
+  width: 28px;
+  height: 28px;
+  float: left;
+  margin-top: -7px;
+  margin-right: 7px;
+}
+
+
+
+
+.menu {
+}
+.menu-item {
+  width: 230px;
+  padding: 20px;
+  background: #ffffea;
+  border: 1px solid #cecece;
+  margin: 10px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition-duration: 0.5s;
+  color: black;
+}
+.menu-item:hover {
+  background: #ffeb8f;
+}
+.menu-item a {
+  text-decoration: none;
+  color: black;
+}
+.menu-item img {
+  width: 70px;
+  height: 70px;
+  margin: auto;
+}
+
+
+
+
+
+
+/* SUBMENU ------------*/
+.submenu {
+  background: #eeeeee;
+  display: table;
+  width: 100%;
+  padding: 0px; 
+}
+.submenu ul {
+  list-style-type: none;
+  padding: 0px;
+}
+.submenu ul li {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  display: inline;
+  padding: 15px;
+  transition-duration: 0.5s;
+}
+.submenu ul li:hover {
+  background: #fff;
+}
+.submenu li a {
+  text-decoration: none;
+}
+.submenu li a img {
+  width: 28px;
+  height: 28px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
+
+
+
+.note1 {
+  padding: 10px;
+  border: 2px dashed #eee;
+  border-radius: 10px;
+  background: #fff59d;
+}
+.note1 * {
+  vertical-align: middle;
+}
+.note1 img {
+  width: 30px;
+  height: auto;
+  margin: auto;
+  margin-right: 10px;
+  display: inline-block;
+}
+.note2 {
+  padding: 10px;
+  border: 2px dashed #eee;
+  border-radius: 10px; 
+  background: rgba(255, 0, 0, 0.137);
+}
+.note2 img {
+  width: 100px;
+}
+
+
+
+
+/* TABLE -----------*/
+table {
+  background: white;
+  border: 1px solid #fcfcfc;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+table td {
+  padding: 5px;
+  border: 1px solid #cacaca;
+}
+table th {
+  background: #f3f3f3;
+  padding: 5px;
+  border: 1px solid #cacaca;
+}
+table caption {
+  background: #f1f1f1;
+  padding: 10px;
+  border: 1px solid #cacaca;
+  border-bottom: none;
+  font-weight: bold;
+}
+
+.table-detail {
+  border: 1px solid #ddd;
+  background: #fff;
+}
+.table-detail th {
+  background: #eee !important;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  text-align: right;
+  padding: 15px;
+}
+.table-detail td {
+  background: transparent !important;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-weight: normal;
+  padding: 15px;
+}
+
+.table-list {
+  border: none;
+}
+.table-list th {
+  background: gainsboro;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #cacaca;
+}
+.table-list td {
+  background: white;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #cacaca;
+  cursor: pointer;
+  height: 50px;
+}
+.table-list td img {
+height: 100%;
+width: auto;
+}
+.table-list td:first-child {
+  width: 55px;
+}
+
+.table-list tr:hover > td {
+  background: #acfacf;
+}
+
+
+
+tr.total th, tr.total td {
+  text-align: right;
+  font-weight: bold;
+  background: #eee;
+}
+tr.center th, tr.center td {
+  text-align: center;
+}
+
+
+
+
+/* INPUT ------------*/
+input, select {
+  border: #999 1px solid;
+  border-radius: 5px;
+  padding: 10px;
+}
+input[type=number] {
+  text-align: right;
+}
+input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+}
+input[type=radio] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+input[type=button], input[type=submit], .button, button {
+  cursor: pointer;
+  background: #008150;
+  color: white;
+  transition-duration: 0.5s;
+}
+input[type=button]:hover, input[type=submit]:hover, .button:hover, button:hover {
+  background: #003806;
+  color: white;
+}
+textarea {
+  padding: 10px;
+  border-radius: 5px;
+}
+input:read-only {
+  background: #ddd !important;
+}
+
+
+
+
+
+/* CLASE PARA BOTONES -----------*/
+.button1 {
+  background: #ddd !important;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #999;
+  transition-duration: 0.5s;
+  display: inline-block;
+}
+.button1:hover {
+  background: #fff4de !important;
+}
+
+.button2 {
+  background: #ffc964 !important;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #999;
+  transition-duration: 0.5s;
+  display: inline-block;
+}
+.button2:hover {
+  background: yellow !important;
+}
+
+.button3 {
+  background: rgb(92, 0, 0) !important;
+  color: white !important;
+}
+.button3:hover {
+  background: red !important;
+  color: white !important;
+}
+
+
+
+
+a.button1 {
+  background: #ddd;
+  padding: 18px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  text-decoration: None;
+  color: #333;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+a.button1:hover {
+  background: #fff;
+}
+a.button1 img {
+  width: 30px;
+  height: 30px;
+  margin: -10px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+
+
+
+
+/* LINE ------------*/
+.line1 {
+
+}
+.line2 {
+
+}
+.line3 {
+	background-color: #fff;
+	border-top: 2px dashed #8c8b8b;
+}
+
+
+
+
+/* UL OL ------------- */
+ul {
+  list-style: none;
+}
+
+.ul2 {
+  background: white;
+  border: 1px solid gainsboro;
+}
+.ul2 li {
+  padding: 10px;
+  cursor: pointer;
+  transition-duration: 0.5s;
+  border-bottom: 1px solid gainsboro;
+}
+.ul2 li:hover {
+  background: #aaccee;
+}
+
+
+
+/* Listado de items {{ object }} haciendo uso del __str__ del modelo. que 
+Es una imagen seguida de un texto. */
+.list {
+}
+
+.list a {
+    text-decoration: none;
+    color: #333;
+}
+.list table {
+    border-collapse: collapse;
+}
+.list div, tr {
+    background: #efefef;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #dddddd;
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+.list div:hover, tr:hover {
+    background: white;
+}
+.list div * {
+    vertical-align: middle;
+}
+.list img {
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+
+
+
+
+/* ERRORS ----------------*/
+.errorlist {
+  padding: 10px;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  border: 2px solid red;
+}
+
+
+
+
+/* FORMULARIOS -------------*/
+.form1 {
+  padding: 20px;
+  background: #fafafa;
+  border: 1px solid #eaeaea;
+}
+
+.form1 table {
+  background: transparent;
+  border: none;
+}
+
+.form1 td {
+  background: transparent;
+  border: none;
+}
+.form1 th {
+  background: transparent;
+  border: none;
+  text-align: right;
+  font-weight: bold;
+}
+.form1 .helptext {
+  color: gray;
+  font-size: small;
+}
+
+
+.form-p {
+  background: #e9e9e9;
+  padding: 10px;
+}
+.form-p label {
+  display: block;
+  padding-bottom: 5px;
+}
+.form-p button 
+
+.form-p p {
+  border-bottom: 1px solid rgb(218, 218, 218);
+  padding-bottom: 10px;
+}
+.form-p .helptext {
+  color: rgb(129, 129, 129);
+  font-size: small;
+  font-style: italic;
+}
+.form-p .errorlist {
+  padding: 0px;
+}
+.form-p .errorlist li {
+  padding: 10px;
+  background: #fff0c7;
+  border: 1px dashed #fcda00;
+  list-style: none;
+}
+
+
+
+
+/* MISCELANEOS ------------*/
+.menuitemlist {
+  width: 100%;
+  clear: left;
+}
+.menuitem {
+  padding: 10px;
+  background: gainsboro;
+  float: left;
+}
+.menuitem img {
+  width: 64px;
+  height: 64px;
+}
+
+
+
+/* SOMBRAS --------------------*/
+
+.sombra1 {
+  -webkit-box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+  -moz-box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+  box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+}
+
+
+
+.enfasis {
+  background-color: #ffc4009a !important;
+  font-weight: bold !important;
+}
+
+
+
+
+/* DIALOG MODAL ----------------*/
+.modal {
+  display: none;
+  background: #fafafa;
+  position: fixed;
+  z-index: 1;
+  top: 50px;
+  left: 50px;
+  margin-left: auto;
+  overflow: auto;
+  border: 1px solid #cacaca;
+  -webkit-box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+  -moz-box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+  box-shadow: -11px 20px 34px -2px rgba(0,0,0,0.33);
+}
+/* The Close Button */
+.modal .close {
+  color: #ffffff;
+  float: right;
+  font-size: 35px;
+  font-weight: bold;
+  background: gray;
+  padding: 10px;
+}
+.modal .close:hover, .modal .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  background: rgb(247, 148, 148);
+}
+.modal .modal-header {
+  background: #dadada;
+  color: #000;
+  width: 100%;
+  padding: 5px;
+}
+.modal .modal-header td {
+  border: none;
+}
+.modal .modal-header th {
+  border: none;
+}
+.modal .modal-header-l {
+  width: 50px;
+}
+.modal .modal-header-c {
+
+}
+.modal .modal-header-r {
+  width: 50px;
+  padding: 5px;
+  cursor: pointer;
+  border-left: 1px solid #cacaca !important;
+}
+.modal .modal-header-r:hover {
+  background: #acfacf;
+}
+.modal .modal-header img {
+  width: 30px;
+  height: 30px;
+  margin: auto;
+}
+.modal .modal-content {
+  padding: 20px;
+}
+.modal .modal-content table {
+  background: transparent;
+  border: none !important;
+}
+.modal .modal-content table th {
+  background: transparent !important;
+  border: none !important;
+  padding: 3px !important;
+}
+.modal .modal-content table td {
+  background: transparent !important;
+  border: none !important;
+  padding: 3px !important;
+}
+.modal .modal-footer {
+  width: 100%;
+  padding: 20px;
+}
+.modal .modal-footer table {
+  border-top: 1px solid #cacaca;
+  width: 100%;
+  background: transparent;
+}
+.modal .modal-footer table td {
+  border: none;
+  width: 25%;
+}
+.modal .modal-footer input {
+  width: 100%;
+}
+
+
+
+
+/* SEARCH-BOX -------------*/
+.search-box {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.search-box table {
+  background: transparent;
+  border: none;
+  height: 100%;
+}
+.search-box fieldset {
+  height: 100%;
+}
+.search-box table td, .search-box table th {
+  border: none;
+}
+.search-box-input {
+  min-width: 256px;
+}
+.search-box-input input {
+  width: 100%;
+  height: 100%;
+}
+.search-box-button {
+  width: 100px;
+}
+.search-box-button .button, .search-box-button button, .search-box-button input, .search-box-button a {
+  width: 100%;
+  height: 100%;
+}
+.search-box-options {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+.search-box-options * {
+  vertical-align: middle;
+}
+
+
+
+
+#footer {
+  padding: 5px;
+}
+#footer section {
+  float: left;
+  background: transparent;
+  padding: 10px;
+  width: 33%;
+}
+#footer section ul {
+  list-style: none !important;
+}
+#footer img {
+  width: 50px;
+  height: auto;
+}
+
+.copyright {
+  clear: left;
+  display: block;
+}
+
+
+
+
+
+
+/* ------------------ IMPRIMIR ------------------*/
+
+/* CONFIGURADO PARA IMPRIMIR EN RECIBO 75mm x 150mm*/
+#imprimirRecibo1 {
+  background: #fff !important;
+  width: 150px !important;
+  height: 566px !important;
+  border: 0px dashed gray;
+  padding: 0px !important;
+  margin: auto !important;
+}
+#imprimirRecibo1 table {
+  border-collapse: collapse !important;
+  background: white !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  font-size: 11px !important;
+  width: 150px !important;
+}
+#imprimirRecibo1 th {
+  text-align: right;
+  background: white !important;
+  border: none !important;
+  font-weight: bold !important;
+}
+#imprimirRecibo1 td {
+  text-align: left;
+  background: white !important;
+  border: none !important;
+  border-color: white !important;
+  font-weight: bold;
+}

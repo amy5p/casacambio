@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="form-p" style="width: 350px; margin: auto; border-radius: 10px">
+        <h2>Cerrar sección</h2>
+        <p>¿Seguro que quieres cerrar la sección del usuario: {{ request.user }}?</p>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Si, cerrar la sección">
+        <input type="button" value="No, regresar atrás">
+    </div>
+  </form>
+
+  <style>
+      .form-p input {
+          width: 100%;
+      }
+  </style>
+{% endblock %}

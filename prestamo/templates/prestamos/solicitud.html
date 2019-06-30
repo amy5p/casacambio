@@ -1,0 +1,472 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+
+
+
+
+
+
+{% block header %}
+
+{% endblock header %}
+    
+
+
+
+{% block content %}
+
+    {# Textos traduccidos. #}
+    {% trans 'Enviar solicitud' as texto1 %}
+
+
+    <div style="display: inline-block">
+        <div style="padding: 20px; width: 700px; float: left;">
+        <div class="form3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.errors }}
+
+
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('personales')">Datos personales</a>
+                    <div class="fieldGroup" id="personales" style="display: none">
+                        <p class="field">
+                            {% with form.nombre as field %}
+                                {% if field.errors %}
+                                {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.cedula as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.email as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.direccion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.estado_civil as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+                
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('laborales')">Datos laborales</a>
+                    <div class="fieldGroup" id="laborales" style="display: none">
+                        <p class="field">
+                            {% with form.trabajo_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.trabajo_direccion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.trabajo_posicion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.trabajo_ingresos as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.trabajo_inicio as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('conyugue')">Datos del conyugue</a>
+                    <div class="fieldGroup" id="conyugue" style="display: none">
+                        <p class="field">
+                            {% with form.conyugue_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.conyugue_trabajo_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.conyugue_trabajo_direccion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.conyugue_trabajo_telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.conyugue_trabajo_posicion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.conyugue_trabajo_ingresos as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('ref1')">Referencias personales</a>
+                    <div class="fieldGroup" id="ref1" style="display: none">
+                        <p class="field">
+                            {% with form.ref1_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref1_parentesco as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref1_telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref1_celular as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref1_direccion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref2_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref2_parentesco as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref2_telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref2_celular as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref2_direccion as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('ref3')">Referencias comerciales</a>
+                    <div class="fieldGroup" id="ref3" style="display: none">
+                        <p class="field">
+                            {% with form.ref3_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref3_telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref4_nombre as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.ref4_telefono as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <br>
+
+                <div style="padding: 10px; border: solid 1px rgb(184, 184, 184); background-color: rgb(247, 246, 236)">
+                    <a class="button1" style="cursor: pointer; width: 93%; font-weight: bold;" onclick="show('anexos')">Documentos anexos</a>
+                    <div class="fieldGroup" id="anexos" style="display: block">
+                        <p class="field">
+                            {% with form.cedula_file as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                        <p class="field">
+                            {% with form.carta_de_trabajo_file as field %}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                                <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                                {{ field }}
+                                <span class="helptext">{{ field.help_text }}</span>
+                            {% endwith %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="fieldGroup" id="consentimiento" style="display: block">
+                    <p class="field">
+                        {% with form.consentimiento as field %}
+                            {% if field.errors %}
+                                {{ field.errors }}
+                            {% endif %}
+                            <label for="id_{{ field.name }}">{{ field.label }}</label><br>
+                            {{ field }}
+                            <span class="helptext">{{ field.help_text }}</span>
+                        {% endwith %}
+                    </p>
+                </div>
+
+                <br>
+
+                <hr>
+                <input type="submit" onclick="showAll();" value="{{ texto1 }}">
+            </form>
+        </div>
+        </div>
+
+
+        <div style="float: left; width: 400px">
+            <img src="{{ IMG_PRESTAMOS_SOLICITUD }}" alt="Solicitud" style="width: 100%">
+        </div>
+
+    </div>
+
+
+
+    <script>
+        
+        function show(id) {
+            var e = document.getElementById(id);
+            if (e.style.display == "block") {
+                e.style.display = "none";
+            }
+            else {
+                e.style.display = "block";
+            }
+        }
+
+
+        function showAll() {
+            document.getElementById("personales").style.display = "block";
+            document.getElementById("laborales").style.display = "block";
+            document.getElementById("conyugue").style.display = "block";
+            document.getElementById("ref1").style.display = "block";
+            document.getElementById("ref3").style.display = "block";
+            document.getElementById("anexos").style.display = "block";
+
+        }
+
+
+    </script>
+    
+
+
+    
+
+{% endblock content %}
+

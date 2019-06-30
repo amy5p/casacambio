@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+
+{% block header %}
+{% endblock header %}
+    
+
+
+
+{% block content %}
+
+    {% if prestamo_desembolsado %}
+        <div class="note1">
+            <img src="{{ IMG_GOOD }}" alt="Imagen correcto">
+            <b>{% trans "¡Préstamo desembolsado!" %}</b>
+            {% trans "El préstamo No." %} <b>{{ prestamo.cuenta.numero }}</b> {% trans " ya está desembolsado." %}
+        </div>
+        <a href="{{ prestamo.get_absolute_url }}">Ir al préstamo</a>
+    {% else %}
+        <div style="padding: 20px; width: 600px">
+            <div class="form_p">
+                <form action="" id="form1" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <hr class="line1">
+                    <a class="button1" href="{{ prestamo.get_absolute_url }}" title="{% trans 'Regresar' %}"><img src="{{ IMG_BACK }}" alt="Regresar"></a>
+                    <a class="button1" onclick="document.getElementById('form1').submit();" title='{% trans "Desembolsar" %}'><img src="{{ IMG_SAVE }}" alt="Guardar"></a>
+                    
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+
+
+{% endblock content %}

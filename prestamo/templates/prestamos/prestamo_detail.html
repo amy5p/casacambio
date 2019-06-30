@@ -1,0 +1,178 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+
+
+
+
+{% block content %}
+    {# DETALLE DEL OBJECTO --------------------------#}
+    <div class="detail"> 
+        <div style="width: 50%;">
+            <table class="table-detail">
+                <tbody>
+                    {% for item in object.GetDetail %}
+                        <tr id="{{ item.field }}">
+                            <th>{{ item.name }}</th>
+                            <td title="{{ item.help }}">{{ item.display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <br>
+
+
+    {# TABLA DE AMORTIZACIÓN ------------------------#}
+    <div class="detail" id="amortizacion">
+        <table class="tableamortizacion" style="width: 100%">
+            <caption>{% trans "Tabla de amortización" %}</caption>
+            <tbody>
+                <tr>
+                  {% for name in object.GetAmortizacionTitulos %}
+                    <th>{{ name }}</th>
+                  {% endfor %}
+                </tr>
+
+                {% for item in object.GetAmortizacion %}
+                  <tr class="{{ item.clase }}">
+                      <td>{{ item.cuota }}</td>
+                      <td>{{ item.fecha|date:"d M Y" }}</td>
+                      <td style="text-align: right">{{ item.valor|moneda }}</td>
+                      <td style="text-align: right">{{ item.interes|moneda }}</td>
+                      <td style="text-align: right">{{ item.capital|moneda }}</td>
+                      <td style="text-align: right">{{ item.capital_restante|intcomma }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="menu">
+            <a class="button1" onclick="location.href='{{ object.ExportAmortizacion }}'" title="Exportar en formato CSV"><img src="{{ IMG_SAVE }}" alt="Exportar"></a>
+            <a class="button1" href="{% url 'prestamo-prestamo-print' pk=object.id %}?part=amortizacion" title="Imprimir"><img src="{{ IMG_PRINT }}" alt="Imprimir"></a>
+        </div>
+    </div>
+    <br>
+
+
+    <div class="detail">
+        {% with object.GetComportamiento as comp %}
+            <table class="tableamortizacion" style="width: 100%">
+                <caption>{% trans "Comportamiento de pagos" %}</caption>
+                <tbody>
+                    <tr>
+                        <th>Cuota</th>
+                        <th>Fecha de corte</th>
+                        <th>Interés</th>
+                        <th>Capital</th>
+                        <th>Monto a pagar</th>
+                        <th>Monto por pagar</th>
+                        <th>Monto pagado</th>
+                        <th>Mora</th>
+                        <th>Saldo anterior</th>
+                    </tr>
+                    {% for item in comp.comportamiento %}
+                    <tr class="{{ item.clase }}">
+                        <td>{{ item.cuota }}</td>
+                        <td>{{ item.corte }}</td>
+                        <td style="text-align: right">{{ item.interes }}</td>
+                        <td style="text-align: right">{{ item.capital }}</td>
+                        <td style="text-align: right">{{ item.apagar|intcomma }}</td>
+                        <td style="text-align: right">{{ item.porpagar|intcomma }}</td>
+                        <td style="text-align: right">{{ item.pagado|intcomma }}</td>
+                        <td style="text-align: right">{{ item.mora|intcomma }}</td>
+                        <td style="text-align: right">{{ item.saldo_anterior|intcomma }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="menu">
+                <a class="button1" onclick="location.href='{{ object.ExportComportamiento }}'" title="Exportar en formato CSV"><img src="{{ IMG_SAVE }}" alt="Exportar"></a>
+                <a class="button1" href="{% url 'prestamo-prestamo-print' pk=object.id %}?part=comportamiento" title='"Imprimir"'><img src="{{ IMG_PRINT }}" alt="Imprimir"></a>
+            </div>
+            {% with object.GetSiguientePago as proximopago %}
+              {% if proximopago %}
+                <br>
+
+                {% with comp.estadisticas.cuotas_vencidas as cuotas_vencidas  %}
+                    {% if cuotas_vencidas %}
+                        <div class="note1">
+                            <img src="{{ IMG_STOP }}" alt="">
+                            {% trans "Este préstamo presenta " %} {{ comp.estadisticas.cuotas_vencidas }} {% trans " cuotas vencidas." %}
+                        </div>
+                        <br>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="note1">
+                    <img src="{{ IMG_INFO }}" alt="Información">
+                    {% trans "Próxima cuota a pagar en fecha " %}<b>{{ proximopago.corte }}</b>, {% trans "por un valor de " %}<b>{{ proximopago.porpagar|intcomma }}</b>.  
+                    <a class="button1" href="{{ object.GetPagarUrl }}">{% trans "Pagar ahora" %}</a>
+                </div>
+              {% endif %}
+            {% endwith %}
+        {% endwith %}
+    </div>
+    <br>
+
+
+
+    {# MUESTRA EL DESEMBOLSO ------------------------#}
+    <div class="detail">
+        {% with object.GetDesembolso as desembolso %}
+          {% if desembolso %}
+            <h2>{% trans "Desembolso" %}</h2>
+            <div class="list">
+                <a href="{{ desembolso.get_absolute_url }}">
+                    <div><img src="{{ desembolso.GetImg }}" alt=""><span>{{ desembolso }}</span></div>
+                </a>
+            </div>
+          {% else %}
+            <div class="note1">
+                <img src="{{ IMG_INFO }}" alt="Información">
+                {% trans "Este préstamo aun no ha sido desembolsado." %}
+                <a class="button1" href="{{ object.GetDesembolsarUrl }}">{% trans "Desembolsar" %}</a>
+            </div>
+          {% endif %}
+        {% endwith %}
+    </div>
+    <br>
+
+
+
+    {# PAGOS Y REEMBOLSOS -----------------------------------------#}
+    <div class="detail">
+        {% with object.GetPagosYReembolsos as pagos %}
+            {% if pagos %}
+                <h2>{% trans "Pagos" %}</h2>
+                <div class="list">
+                    {% for obj in pagos %}
+                        <a href="{{ obj.get_absolute_url }}">
+                            <div>
+                            <img src="{{ obj.GetImg }}" alt="{{ obj }}">
+                            <span>{{ obj }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="note1">
+                    <img src="{{ IMG_INFO }}" alt="Información">
+                    {% trans "Este préstamo no tiene pagos." %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <br>
+
+
+
+
+
+
+
+{% endblock content %}

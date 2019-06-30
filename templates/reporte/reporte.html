@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+    <div style="width: 100%">
+        <div class="menu">
+            {% for item in menu_reportes %}
+              <a href="{{ item.url }}">
+                <div id="{{ item }}" class="menu-item" title="{{ item.help }}" style="float: left">
+                  <img src="{{ item.img }}" alt="">
+                  <h2>{{ item.name }}</h2>
+                </div>
+              </a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

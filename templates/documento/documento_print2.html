@@ -1,0 +1,96 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+	
+    <div>
+		{# CUADRO UTILIZADO PARA LA IMPRESIÓN DE DOCUMENTOS #}
+        {% with object.GetDetailSubfieldsAll as detail %}
+        <div>
+            <div> 
+                <table>
+                    <tbody>
+                        {# ENCABEZADO #}
+                        <tr><td colspan="4" style="text-align: center"><b>{{ detail.almacen__empresa__nombre }}</b></td></tr>
+                        <tr><td colspan="4" style="text-align: center">RNC: {{ detail.almacen__empresa__identificacion }}</td></tr>
+                        <tr><td colspan="4" style="text-align: center">Tel: {{ detail.almacen__telefonos }}</td></tr>
+                        <tr><td colspan="4" style="text-align: center">OFICINA: {{ detail.almacen|upper }}</td></tr>
+                        <tr><td colspan="4" style="text-align: center">{{ detail.almacen__ubicacion }}</td></tr>
+                        <tr><td colspan="4"></td></tr>
+                        {# CLIENTE #}
+                        <tr><td colspan="4" style="text-align: center; border-top: 1px dashed; border-bottom: 1px dashed"><b>INFORMACIÓN DEL CLIENTE</b></td></tr>
+                        <tr>
+                            <th colspan="1">Nombre:</th>
+                            <td colspan="3">{{ detail.persona__nombre }}</td>
+                        </tr>
+                        <tr><td colspan="4"></td></tr>
+                        {# FACTURACIÓN #}
+                        <tr><td colspan="4" style="text-align: center; border-top: 1px dashed; border-bottom: 1px dashed"><b>{{ object.GetTitulo }}</b></td></tr>
+                        <tr>
+                            <th colspan="1">Número:</th>
+                            <td colspan="3">{{ detail.tipo__codigo }}-{{ detail.numero }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Fecha/hora:</th>
+                            <td colspan=3>{{ detail.fecha_creacion }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Monto:</th>
+                            <td colspan="3" style="text-align: right">{{ detail.monto_entrada|moneda:detail.entrada__moneda__simbolo }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Tasa:</th>
+                            <td colspan="3" style="text-align: right">{{ object.GetTasa|moneda:"" }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Total:</th>
+                            <td colspan="3" style="text-align: right"><b>{{ detail.monto_salida|moneda:detail.salida__moneda__simbolo }}</b></td>
+                        </tr>
+                        <tr>
+                            <th colspan="1">Nota:</th>
+                            <td colspan="3">{{ detail.nota }}</td>
+                        </tr>
+
+                        <tr style="height: 20px"><td colspan="4"></td></tr>
+                        <tr>
+                            <td style="text-align: center"></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center">{{ detail.cajero.value }}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; border-top: 1px solid black">Cliente</td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center; border-top: 1px solid black">Cajero</td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <br>
+        </div>
+        {% endwith %}
+	</div>
+	
+	<style>
+        table {
+			font-family: 'Courier New', Courier, monospace !important;
+		}
+    </style>
+                
+    <script>
+    
+        window.onload = printOut;
+
+        function printOut() {
+            printElemento('areaImpresion1');
+            window.location.href = "{% url 'documento-documento-factura-create' %}";
+        }
+    </script>
+
+{% endblock %}

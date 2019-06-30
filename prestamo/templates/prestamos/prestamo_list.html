@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+
+
+
+{% block content %}
+    {# ------ CUADRO DE BUSQUEDA -------- #}
+    <form id="form-search" action="">
+        <div class="search-box">
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="search-box-input">
+                                <input type="search" id="search1" name="q" placeholder="Buscar...">
+                            </div>
+                        </td>
+                        <td><div><input type="submit" value="Buscar"></div></td>     
+                        <td>
+                            <fieldset class="search-box-options">
+                                <legend>Buscar en:</legend>
+                                <input type="radio" id="radio_tags" name="field" value="tags" checked>Todos
+                                <input type="radio" id="radio_id" name="field" value="id">Número
+                                <input type="radio" id="radio_almacen__tags" name="field" value="almacen__tags">Almacén
+                                <input type="radio" id="radio_tipo__tags" name="field" value="tipo__tags">Tipo
+                                <input type="radio" id="radio_suplidor__tags" name="field" value="persona__tags">Suplidor
+                            </fieldset>
+                        </td>
+
+                        <td>
+                            <fieldset class="search-box-options">
+                                <legend>Filtrar por fecha (dia/mes/año):</legend>
+                                <input type="number" id="search_day" name="fecha__day" min="0" max="31" style="width: 80px" title="Día">
+                                <input type="number" id="search_month" name="fecha__month" min="0" max="12" style="width: 80px" title="Mes">
+                                <input type="number" id="search_year" name="fecha__year" min="0" max="3000" style="width: 80px" title="Año">
+                            </fieldset>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Establecemos el valor al input:search
+            $("#search1").val("{{ request.GET.q }}");
+            try {
+                // Seleccionamos la opción indicada en el parámetro pasado por url.
+                document.getElementById("radio_"+"{{ request.GET.field }}").checked = true;
+            } catch (error) {
+            }
+            // Establecemos la fecha.
+            document.getElementById("search_year").value = "{{ request.GET.fecha__year }}";
+            document.getElementById("search_month").value = "{{ request.GET.fecha__month }}";
+            document.getElementById("search_day").value = "{{ request.GET.fecha__day }}";
+
+        </script>
+    </form>
+    <br>
+
+    <div class="detail">
+        <table class="table-list" style="width: 100%">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>Número</th>
+                    <th>Cliente</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Tasa</th>
+                    <th>Periodo</th>
+                    <th>Cuotas</th>
+                </tr>
+                {% for obj in object_list  %}
+                  <tr onclick="goToURL('{{ obj.get_absolute_url }}');">
+                      <td><img src="{{ obj.GetImg }}" alt=""></td>
+                      <td>{{ obj.cuenta.numero }}</td>
+                      <td>{{ obj.cliente }}</td>
+                      <td>{{ obj.monto }}</td>
+                      <td>{{ obj.fecha_inicio }}</td>
+                      <td>{{ obj.tasa }}%</td>
+                      <td>{{ obj.periodo }}</td>
+                      <td>{{ obj.cuotas }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+

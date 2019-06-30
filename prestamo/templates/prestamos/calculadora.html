@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+{% block head-extras %}
+    <script type="text/javascript" src="{% static 'base/js/prestamos.js' %}"></script>
+{% endblock head-extras %}
+
+
+
+{% block header %}
+{% endblock header %}
+    
+
+
+
+{% block content %}
+
+<div style="padding: 20px; width: 600px;">
+
+    <div class="form_p">
+        <div id="errores"></div>
+        <p>
+            <label for="monto">{% trans "¿Cuál es el monto que necesitas?" %}</label>
+            <input type="number" id="monto" placeholder="" required>
+        </p>
+        <p>
+            <label for="cuotas">{% trans "¿En cuántas cuotas piensas pagarlo?" %}</label>
+            <input type="number" id="cuotas" placeholder="" required>
+        </p>
+        <p>
+            <label for="tasa">{% trans "¿Cuál es la tasa de interés?" %}</label>
+            <input type="number" id="tasa" placeholder="" value="{{ conf.GetDict.prestamos_tasa }}" required>
+        </p>
+        <p>
+            <label for="periodo">{% trans "¿En qué periodo realizará los pagos?" %}</label>
+            <select name="periodo" id="periodo">
+                <option value="diario">{% trans "Diario" %}</option>
+                <option value="semanal">{% trans "Semanal" %}</option>
+                <option value="quincenal">{% trans "Quincenal" %}</option>
+                <option value="mensual" selected>{% trans "Mensual" %}</option>
+            </select>
+        </p>
+        <p>
+            <hr class="line1">
+            <input type="button" value="{% trans 'Calcular' %}" onclick="calcular();">
+        </p>
+    </div>
+    <small style="color: gray;">
+        <b>Nota:</b>
+        <i><br>
+        {% trans "Cálculo aproximado de acuerdo a los datos ingresados." %} <br>
+        {% trans "No se contempló período de gracia." %} <br>
+        {% trans "Los resultados de esta simulación son aproximados" %}, {% trans "pudiendo variar por razones comerciales o fiscales." %} <br>
+        </i>
+    </small>
+</div>
+
+{# tabla de amortización #}
+<div style="padding: 20px; display: inline; width: 100%;">
+    <div class="note1" id="div_comentario" style="width: 99%;"></div>
+    <br>
+    <table class="table1" style="width: 100%; text-align: right;">
+        <tbody>
+            <tr>
+                <th>{% trans "Número" %}</th>
+                <th>{% trans "Interés" %}</th>
+                <th>{% trans "Abono al capital" %}</th>
+                <th>{% trans "Valor de la cuota" %}</th>
+                <th>{% trans "Saldo al capital" %}</th>
+            </tr>
+        </tbody>
+        <tbody id="tbody_1"></tbody>
+    </table>
+</div>
+<br style="clear: left">
+
+
+{% endblock content %}

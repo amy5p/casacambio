@@ -1,0 +1,364 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    <div class="form1">
+        <form id="form1" method="POST" class="post-form">{% csrf_token %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+
+            {% for error in form.error_list %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            
+
+            <table id="table-form" style="margin: auto">
+                <tbody>
+                    <tr>
+                        <td class="r"><label for="id_almacen">{{ form.almacen.label }}:</label></td>
+                        <td>{{ form.almacen }}{{ form.almacen.errors }}</td>
+                        <td class="r"><label for="id_tipo">{{ form.tipo.label }}</label></td>
+                        <td>{{ form.tipo }}{{ form.tipo.errors }}</td>
+                        <td class="r"><label for="id_fecha">{{ form.fecha.label }}:</label></td>
+                        <td>{{ form.fecha }}{{ form.fecha.errors }}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="r"><label for="id_persona">{{ form.persona.label }}:</label></td>
+                        <td colspan="2">{{ form.persona }}{{ form.persona.errors }}</td>
+                        <td colspan="4">{{ form.nota }}{{ form.nota.errors }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br><br>
+
+                <!--
+                    <tr>
+                        <td colspan="7" style="height: 70px; background: white"></td>
+                    </tr>
+                    <tr>
+                        <td><img src="{{ IMG_DOCUMENTO_ENTRADA }}" alt=""></td>
+                        <td class="r"><label for="id_entrada">{{ form.entrada.label }}:</label></td>
+                        <td title="{{ form.entrada.help_text }}">{{ form.entrada }}{{ form.entrada.errors }}</td>
+                        <td class="r"><label for="id_tasa_entrada">{{ form.tasa_entrada.label }}:</label></td>
+                        <td title="{{ form.tasa_entrada.help_text }}">{{ form.tasa_entrada }}{{ form.tasa_entrada.errors }}</td>
+                        <td class="r"><label for="id_monto_entrada">{{ form.monto_entrada.label }}:</label></td>
+                        <td title="{{ form.monto_entrada.help_text }}">{{ form.monto_entrada }}{{ form.monto_entrada.errors }}</td>
+                    </tr>
+                    <tr><td colspan="7" style="height: 50px; background: white;"></td></tr>
+                    <tr>
+                        <td><img src="{{ IMG_DOCUMENTO_SALIDA }}" alt=""></td>
+                        <td class="r"><label for="id_salida">{{ form.salida.label }}:</label></td>
+                        <td title="{{ form.salida.help_text }}">{{ form.salida }}{{ form.salida.errors }}</td>
+                        <td class="r"><label for="id_tasa_salida">{{ form.tasa_salida.label }}:</label></td>
+                        <td title="{{ form.tasa_salida.help_text }}">{{ form.tasa_salida }}{{ form.tasa_salida.errors }}</td>
+                        <td class="r enfasis"><label for="id_monto_salida">{{ form.monto_salida.label }}:</label></td>
+                        <td class="enfasis" title="{{ form.monto_salida.help_text }}">{{ form.monto_salida }}{{ form.monto_salida.errors }}</td>
+                    </tr>
+
+                -->
+
+            <table style="margin: auto;" class="table-form">
+                <tbody>
+                    <tr>
+                        <td colspan="3" style="text-align: center"><img src="{{ IMG_DOCUMENTO_ENTRADA }}" style="width: 70px" alt=""></td>
+                        <td colspan="1"></td>
+                        <td colspan="3" style="text-align: center"><img src="{{ IMG_DOCUMENTO_SALIDA }}" style="width: 70px" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="monedas entrada">
+                            <div><label for="id_entrada">{{ form.entrada.label }}</label></div> 
+                            <div title="{{ form.entrada.help_text }}">{{ form.entrada }}{{ form.entrada.errors }}</div>
+
+                            <div><label for="id_monto_entrada">{{ form.monto_entrada.label }}</label></div> 
+                            <div title="{{ form.monto_entrada.help_text }}">{{ form.monto_entrada }}{{ form.monto_entrada.errors }}</div>
+                        </td>
+
+                        <td colspan="2" style="width: 200px; text-align: center">
+                            <img src="{{ IMG_FLECHA_DERECHA }}" style="width: 80px" alt="">
+                            <div>Tasa</div> 
+                            <div id="div-tasa-entrada" title="{{ form.tasa_entrada.help_text }}">{{ form.tasa_entrada }}{{ form.tasa_entrada.errors }}</div>
+                            <div id="div-tasa-salida" title="{{ form.tasa_salida.help_text }}">{{ form.tasa_salida }}{{ form.tasa_salida.errors }}</div>
+                        </td>
+
+                        <td colspan="2" class="monedas salida">
+                            <div><label for="id_salida">{{ form.salida.label }}</label></div> 
+                            <div title="{{ form.salida.help_text }}">{{ form.salida }}{{ form.salida.errors }}</div>
+
+                            <div><label for="id_monto_salida">{{ form.monto_salida.label }}</label></div> 
+                            <div title="{{ form.monto_salida.help_text }}">{{ form.monto_salida }}{{ form.monto_salida.errors }}</div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>    
+
+            {{ form.media }}
+
+            <hr style="border-top: 1px dashed gray">
+            <br>
+            <div style="margin: auto; width: 400px">
+                <input type="submit" value="Guardar e imprimir" style="width: 100%">
+               
+            </div>
+            
+        </form>
+    </div>
+    <br>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    <style>
+        #table-form .r {
+            text-align: right;
+        }
+
+        #table-form tr:hover {
+            background: #eee !important;
+        }
+
+        .errorlist {
+            position: absolute;
+        }
+        .errorlist:hover {
+            opacity: 0.5;
+        }
+
+        .monedas {
+            width: 300px;
+        }
+        .monedas input, .monedas select {
+            width: 100%;
+        }
+        .monedas div {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .ocultar {
+            display: none !important;
+        }
+    </style>
+
+
+
+
+
+
+
+
+    <script>
+
+        window.onload = function() {
+            document.getElementById("id_almacen").selectedIndex = 1;
+            calcularMontoSalida();
+            actualizarTasa();
+            onChangeAlmacen();
+
+        }
+
+
+        // Al selecionar el almacén, se filtran solo las cuentas de dicho almacén.
+        $("#id_almacen").change(onChangeAlmacen);
+            
+        
+        function onChangeAlmacen() {
+            var id = $("#id_almacen").val();
+            $.ajax({url: "/cuenta/cuenta/json/list/?almacenid="+id, success: function(data) {
+
+                if (data["error"] == true) {
+                    return alert(data["message"]);
+                }
+
+                var select1 = document.getElementById("id_entrada");
+                var select2 = document.getElementById("id_salida");
+                select1.innerHTML = "";
+                select2.innerHTML = "";
+
+                var item;
+                var op;
+
+                // Elemento vacio.
+                /*op = document.createElement("option");
+                op.text = "-----------";
+                select1.appendChild(op);
+                op = document.createElement("option");
+                op.text = "-----------";
+                select2.appendChild(op);*/
+
+                for (i = 0; i < data["results"].length; i++) {
+                    item = data["results"][i];
+
+                    op = document.createElement("option");
+                    op.text = item["name"];
+                    op.value = item["id"];
+                    select1.appendChild(op);
+                    if (item["orden"] == 1) {
+                        select1.value = item["id"];
+                    }
+
+                    op = document.createElement("option");
+                    op.text = item["name"];
+                    op.value = item["id"];
+                    select2.appendChild(op);
+                    if (item["orden"] == 2) {
+                        select2.value = item["id"];
+                    }
+                }
+
+                actualizarTasa();
+            }});
+
+            
+        }
+
+
+
+
+        // Al seleccionar la cuenta de entrada, se establece la tasa
+        // que la moneda de esta tiene configurada, al input 'tasa'.
+        // Si la cuenta de entrada tiene la moneda predeterminada, entonces
+        // la tasa será la de la cuenta de salida, ya que la moneda predeterminada
+        // tendrá su tasa siempre en 1.
+        $("#id_entrada").change(actualizarTasa);
+        $("#id_salida").change(actualizarTasa);
+        $("#id_monto_entrada").keyup(calcularMontoSalida);
+        $("#id_monto_entrada").change(calcularMontoSalida);
+        $("#id_monto_salida").keyup(calcularMontoEntrada);
+        $("#id_tasa_entrada").keyup(calcularMontoSalida);
+        $("#id_tasa_entrada").change(calcularMontoSalida);
+        $("#id_tasa_salida").keyup(calcularMontoSalida);
+        $("#id_tasa_salida").change(calcularMontoSalida);
+
+
+        function actualizarTasa() {
+            var entrada = $("#id_entrada").val();
+            var salida = $("#id_salida").val();
+            $.ajax({url: "/cuenta/cuenta/json/tasas/", success: function(data) {
+
+                try {
+                    $("#id_tasa_entrada").val(data["results"][entrada]["compra"]);
+                } catch (error) {
+                    $("#id_tasa_entrada").val("");
+                }
+
+                try {
+                    $("#id_tasa_salida").val(data["results"][salida]["venta"]);
+                } catch (error) {
+                    $("#id_tasa_salida").val("");
+                }
+                
+                try {
+                    calcularMontoSalida();
+                } catch (error) {
+                    
+                }
+            }});
+        
+        ocultarTasaMonedaPredeterminada();
+        
+        }
+
+
+        // Ocultar la casilla de tasa de la moneda predeterminada
+        // ya que está siempre será 1 sin importar modificación.
+        function ocultarTasaMonedaPredeterminada() {
+            var entrada = $("#id_entrada").val();
+            var salida = $("#id_salida").val();
+            $.ajax({url: "/cuenta/cuenta/json/predeterminada/", success: function(data) {
+
+                if (data["error"] == true) {
+                    return alert(data["message"]);
+                }
+
+                if (data["results"]["id"].value == entrada) {
+                    $("#id_tasa_entrada").addClass("ocultar");
+                }
+                else {
+                    $("#id_tasa_entrada").removeClass("ocultar");
+                }
+
+                if (data["results"]["id"].value == salida) {
+                    $("#id_tasa_salida").addClass("ocultar");
+                }
+                else {
+                    $("#id_tasa_salida").removeClass("ocultar");
+                }
+
+            }});
+        }
+
+
+
+        // Calcula el monto de salida.
+        function calcularMontoSalida() {
+            var entrada = document.getElementById("id_entrada").value;
+            var salida = document.getElementById("id_salida").value;
+            var monto = document.getElementById("id_monto_entrada").value;
+            var tasa1 = document.getElementById("id_tasa_entrada").value;
+            var tasa2 = document.getElementById("id_tasa_salida").value;
+            $.ajax({url: "/documento/documento/json/calcular/monto-salida/?entrada=" + entrada + "&salida=" + salida + "&monto=" + monto + "&tasa1=" + tasa1 + "&tasa2=" + tasa2,  success: function(data) {
+                if (data["error"] == true) {
+                    return;
+                }
+                $("#id_monto_salida").val(data["results"]);
+            }});
+        }
+
+
+        // Calcula el monto de salida.
+        function calcularMontoEntrada() {
+            var entrada = document.getElementById("id_entrada").value;
+            var salida = document.getElementById("id_salida").value;
+            var monto = document.getElementById("id_monto_salida").value;
+            var tasa1 = document.getElementById("id_tasa_entrada").value;
+            var tasa2 = document.getElementById("id_tasa_salida").value;
+            $.ajax({url: "/documento/documento/json/calcular/monto-entrada/?entrada=" + entrada + "&salida=" + salida + "&monto=" + monto + "&tasa1=" + tasa1 + "&tasa2=" + tasa2,  success: function(data) {
+                if (data["error"] == true) {
+                    return;
+                }
+                $("#id_monto_entrada").val(data["results"]);
+            }});
+        }
+
+
+
+        // Guarda el documento, abre el dialogo de impresión y
+        // se mantiene en esta misma página para la creación de 
+        // un nuevo documento.
+        function guardarImprimir() {
+            $("#form1").submit();
+        }
+
+
+
+    </script>
+    
+    
+
+{% endblock %}

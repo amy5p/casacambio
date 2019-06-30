@@ -1,0 +1,140 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    {# ------ CUADRO DE BUSQUEDA -------- #}
+    <form id="form-search" action="">
+        <div class="search-box">
+            <table>
+                <tbody>
+                    <tr class="center">
+                        <th>Año</th>
+                        <th>Mes</th>
+                        <th>Almacén</th>
+                        <th>Moneda</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="number" name="ano" id="form-search-ano" value="{{ today.year }}">
+                        </td>
+                        <td>
+                            <select name="mes" id="form-search-mes">
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="almacen" id="form-search-almacen">
+                                {% for almacen in almacenes %}
+                                    <option value="{{ almacen.id }}">{{ almacen }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select name="moneda" id="form-search-moneda">
+                                {% for moneda in monedas %}
+                                    <option value="{{ moneda.id }}">{{ moneda }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="submit" value="Buscar">
+                                <input type="button" value="Exportar a CSV" onclick="exportToCSV();">
+                            </div>
+                        </td>     
+                        <td>
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Establecemos el valor al input:search y demas...
+            $("#search1").val("{{ request.GET.q }}");
+            if ("{{ request.GET.ano }}") {
+                $("#form-search-ano").val("{{ request.GET.ano }}");
+            }
+            if ("{{ request.GET.mes }}") {
+                $("#form-search-mes").val("{{ request.GET.mes }}");
+            }
+            else {
+                $("#form-search-mes").val("{{ today.month }}");
+            }
+            if ("{{ request.GET.almacen }}") {
+                $("#form-search-almacen").val("{{ request.GET.almacen }}");
+            }
+            if ("{{ request.GET.moneda }}") {
+                $("#form-search-moneda").val("{{ request.GET.moneda }}");
+            }
+
+
+
+            function exportToCSV() {
+                window.location.href = "{% url 'reporte-reporte-export-csv' %}?tipo=mes&almacen={{ request.GET.almacen }}&moneda={{ request.GET.moneda }}&ano={{ request.GET.ano }}&mes={{ request.GET.mes }}";
+            }
+
+        </script>
+    </form>
+    <br>
+
+
+
+    <div class="detail" style="clear: left; display: block">
+        <div>
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <th>Almacén</th>
+                        <th>Fecha</th>
+                        <th>Moneda</th>
+                        <th>Monto</th>
+                        <th>Ganancia</th>
+                        <th>Cantidad</th>
+                    </tr>
+                    {% for item in reporte %}
+                        <tr>
+                            <td>{{ item.almacen }}</td>
+                            <td>{{ item.fecha }}</td>
+                            <td>{{ item.moneda }}</td>
+                            <td style="text-align: right">{{ item.monto_entrada|moneda }}</td>
+                            <td style="text-align: right">{{ item.ganancia|moneda }}</td>
+                            <td style="text-align: right">{{ item.cantidad }} registros</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr class="total">
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>{{ reporte.total_monto|moneda }}</th>
+                        <th>{{ reporte.total_ganancia|moneda }}</th>
+                        <th>{{ reporte.total_cantidad }} registros</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

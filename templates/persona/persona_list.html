@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+
+
+
+
+{% block content %}
+    {# ------ CUADRO DE BUSQUEDA -------- #}
+    <form id="form-search" action="">
+        <div class="search-box">
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="search-box-input">
+                                <input type="search" id="search1" name="q" placeholder="Buscar...">
+                            </div>
+                        </td>
+                        <td><div><input type="submit" value="Buscar"></div></td>     
+                        <td>
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Establecemos el valor al input:search
+            $("#search1").val("{{ request.GET.q }}");
+
+        </script>
+    </form>
+    <br>
+
+    <div class="detail">
+        <table class="table-list" style="width: 100%">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Identificación</th>
+                    <th>Nombre</th>
+                    <th>Razón social</th>
+                    <th>Teléfono</th>
+                    <th>Correo electrónico</th>
+                </tr>
+                {% for obj in object_list  %}
+                  <tr onclick="goToURL('{{ obj.get_absolute_url }}');">
+                      <td><img src="{{ obj.GetImg }}" alt=""></td>
+                      <td>{{ obj.id|complete0:"7" }}</td>
+                      <td>{{ obj.identificacion }}</td>
+                      <td>{{ obj.nombre }}</td>
+                      <td>{{ obj.razon_social }}</td>
+                      <td>{{ obj.telefono1 }}</td>
+                      <td>{{ obj.email }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

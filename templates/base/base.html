@@ -1,0 +1,160 @@
+{% load static %}
+{% load tags %}
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="{{ description }}" />
+		<meta name="keywords" content="{{ keywords }}" />
+		<link rel="stylesheet" href="{% static '/css/base.css' %}" />
+		<!-- Scripts -->
+		<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+		<script src="{% static '/js/jquery.min.js' %}"></script>
+		<script src="{% static '/js/base.js' %}"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<table style="width: 100%; border: none; background: #fafafa;">
+					<tbody>
+						<tr>
+							<td class="logo" style="text-align: left; border: none; width: 90px; padding: 10px">
+								{% if object %}
+									<img src="{{ object|getimg }}" alt="">
+								{% elif object_list %}
+									<img src="{{ object_list|getimg }}" alt="">
+								{% else %}
+									<img src="{{ img }}" alt="">
+								{% endif %}
+							</td>
+							<td style="border: none">
+
+								{% if subtitle %}
+									<h1>{{ subtitle }}</h1>
+								{% elif object %}
+									<h1>{{ object|verbose_name|upper }} | {{ object|upper }}</h1>
+								{% elif object_list %}
+									<h1>{{ object_list|verbose_name_plural|upper }}</h1>
+								{% elif form %}
+									{% if form.instance.pk %}
+									  <h1>{{ form.instance|verbose_name|upper }} | {{ form.instance|upper }}</h1>
+									{% else %}
+									  <h1>{{ form.instance|verbose_name|upper }}</h1>
+									{% endif %}
+								{% else %}
+									<h1>{{ title|upper }} {{ subtitle|upper }}</h1>
+								{% endif %}
+							</td>
+							<td class="logo" style="text-align: right; border: none">
+								<img src="{% empresa 'GetImg' %}" alt="">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+			
+				<ul class="links">
+
+					{% if request.user.username %}
+						<li>
+							<a href="" title="{{ request.user }}">
+								<img src="{{ IMG_USUARIO }}" alt="">
+								<span>{{ request.user }}</span>
+							</a>
+							<ul>
+								<li>
+									<a href="{% url 'logout' %}" title="Cerrar la sección">
+										<img src="{{ IMG_CLOSE }}" alt="">
+										<span>Cerrar la sección</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					{% else %}
+						<li style="background: #915200">
+							<a href="{% url 'login' %}" title="Iniciar sección en el Sistema">
+								<img src="{{ IMG_USUARIO }}" alt="">
+								<span>Iniciar sección</span>
+							</a>
+						</li>
+					{% endif %}
+
+
+					{% for item in menu %}
+					  <li>
+						  <a href="{{ item.1.0.url }}" title="{{ item.1.0.help }}">
+							  <img src="{{ item.1.0.img }}" alt="">
+							  <span>{{ item.1.0.name }}</span>
+						  </a>
+						  <ul>
+							  {% for submenu in item.1.1 %}
+								<li>
+									<a href="{{ submenu.url }}" title="{{ submenu.help }}">
+										<img src="{{ submenu.img }}" alt="">
+										<span>{{ submenu.name }}</span>
+									</a>
+								</li>
+							  {% endfor %}
+						  </ul>
+					  </li>
+					{% endfor %}
+					
+				</ul>
+			</nav>
+
+		<!-- Heading -->
+			<div id="heading" >
+				<div class="submenu">
+					<ul class="links">
+						{% for item in submenu %}
+							<li>
+								<a href="{{ item.url }}" title="{{ item.help }}">
+									<img src="{{ item.img }}" alt="">
+									<span>{{ item.name }}</span>
+								</a>
+							</li>
+						{% endfor %}
+						{% block submenu %}
+						{% endblock %}
+					</ul>
+				</div>
+				{% block content-header %}
+				{% endblock content-header %}
+
+			</div>
+
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="inner">
+					<div class="content">
+						<header>
+						</header>
+						{% block content %}
+						{% endblock content %}
+					</div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="copyright">
+						&copy; <a href="https://www.wilmermartinez.com">www.wilmermartinez.com</a>
+				</div>
+			</footer>
+
+
+
+
+        
+	</body>
+</html>

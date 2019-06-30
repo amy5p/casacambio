@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    {# ------ CUADRO DE BUSQUEDA -------- #}
+    <form id="form-search" action="">
+        <div class="search-box">
+            <table>
+                <tbody>
+                    <tr class="center">
+                        <th>Fecha</th>
+                        <th>Almacén</th>
+                        <th>Moneda</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="date" name="fecha" value="{{ today }}" id="form-search-fecha">
+                        </td>
+                        <td>
+                            <select name="almacen" id="form-search-almacen">
+                                {% for almacen in almacenes %}
+                                    <option value="{{ almacen.id }}">{{ almacen }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <div>
+                                <input type="submit" value="Buscar">
+                                <input type="button" value="Exportar a CSV" onclick="exportToCSV();">
+                            </div>
+                        </td>     
+                        <td>
+                        </td>
+
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Establecemos el valor al input:search y demas...
+            $("#search1").val("{{ request.GET.q }}");
+            if ("{{ request.GET.fecha }}") {
+                $("#form-search-fecha").val("{{ request.GET.fecha }}");
+            }
+            if ("{{ request.GET.almacen }}") {
+                $("#form-search-almacen").val("{{ request.GET.almacen }}");
+            }
+
+
+            function exportToCSV() {
+                window.location.href = "{% url 'reporte-reporte-export-csv' %}?tipo=dia&almacen={{ request.GET.almacen }}&fecha={{ request.GET.fecha }}";
+            }
+
+        </script>
+    </form>
+    <br>
+
+
+
+    <div class="detail" style="clear: left; display: block">
+        <div>
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Almacén</th>
+                        <th>Fecha</th>
+                        <th>Cajero</th>
+                        <th>Entrada</th>
+                        <th>Salida</th>
+                        <th>Tasa</th>
+                    </tr>
+                    {% for item in reporte %}
+                        <tr>
+                            <td>{{ item.numero }}</td>
+                            <td>{{ item.tipo }}</td>
+                            <td>{{ item.almacen }}</td>
+                            <td>{{ item.fecha }}</td>
+                            <td>{{ item.cajero }}</td>
+                            <td style="text-align: right">{{ item.entrada }}</td>
+                            <td style="text-align: right">{{ item.salida }}</td>
+                            <td style="text-align: right">{{ item.tasa }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr class="total">
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

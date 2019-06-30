@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+{% block content %}
+
+    <div class="form1">
+        <form id="form1" method="POST" class="post-form">{% csrf_token %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            <table>
+                {{ form.as_table }}
+            </table>
+
+            {% if object.is_borrador == 'false' %}
+            <input type="submit" value="Guardar">
+            {% endif %}
+            
+            {{ form.media }}
+
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+
+    <br>
+
+
+    
+
+{% endblock %}

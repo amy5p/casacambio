@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+
+
+
+
+
+
+{% block header %}
+
+{% endblock header %}
+    
+
+
+
+{% block content %}
+    
+    <div class="padding20px">
+        <div>
+            <p>
+                {% trans "Tu solicitud ha sido enviada." %} <br>
+                {% trans "Te estaremos contactando lo más pronto posible." %} <br>
+                {% trans "¡Gracias!" %} <br>
+            </p>
+            <img style="width: 150px;" src="{{ IMG_GOOD }}" alt="Correcto">
+        </div>
+        
+        <br>
+        <hr class="line2">
+        <br>
+
+        <div class="margin0px center">
+            {% for link in links.GetGroups.prestamos %}
+                <a class="post" href="{{ link.Url }}">
+                    <div>
+                        <img src="{{ link.GetImg }}" alt="{{ link.name }}">
+                        <h1>{{ link }}</h1>
+                        <p>{{ link.description }}</p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock content %}

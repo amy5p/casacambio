@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+
+{% block content-header %}
+<div class="submenu">
+    <ul class="links">
+        {% for item in menu_documentos %}
+          <li>
+              <a href="{{ item.url }}">
+                  <img src="{{ item.img }}" alt="">
+                  <span>{{ item.name }}</span>
+              </a>
+          </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content-header %}
+
+
+{% block content %}
+    {# ------ CUADRO DE BUSQUEDA -------- #}
+    <form id="form-search" action="">
+        <div class="search-box">
+            <table style="width: 100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="search-box-input">
+                                <input type="search" id="search1" name="q" placeholder="Buscar...">
+                            </div>
+                        </td>
+                        <td><div><input type="submit" value="Buscar"></div></td>     
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            // Establecemos el valor al input:search
+            $("#search1").val("{{ request.GET.q }}");
+        </script>
+    </form>
+    <br>
+
+    <div class="detail">
+        <table class="table-list" style="width: 100%">
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>Referencia</th>
+                    <th>Nombre</th>
+                    <th>Modo</th>
+                </tr>
+                {% for obj in object_list  %}
+                  <tr onclick="goToURL('{{ obj.get_absolute_url }}');">
+                      <td><img src="{{ obj.GetImg }}" alt=""></td>
+                      <td>{{ obj.codename }}</td>
+                      <td>{{ obj.name }}</td>
+                      <td>{{ obj.mode }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

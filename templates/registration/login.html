@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <div class="form-p sombra1" style="width: 350px; margin: auto; border-radius: 10px; padding: 40px">
+        <h2>Iniciar sección</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Entrar">
+    </div>
+  </form>
+
+  <style>
+      .form-p input {
+          width: 100%;
+      }
+  </style>
+{% endblock %}

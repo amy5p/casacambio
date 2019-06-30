@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    <div class="form1">
+        <form id="form1" method="POST" class="post-form">{% csrf_token %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            
+            <table class="table-this">
+                <tbody>
+                    <tr>
+                        <th>Moneda</th>
+                        <th>Tasa compra</th>
+                        <th>Tasa venta</th>
+                    </tr>
+                    {% for fieldset in form.fieldsets %}
+                        <tr>
+                            <td style="text-align: right">{{ fieldset.title }}:</td>
+                            {% for field in fieldset.fields %}
+                                {% if field.readonly %}
+                                    <td>
+                                        <input type="number" value="{{ field.field.initial }}" id="{{ field.id }}" name="{{ field.name }}" readonly>
+                                    </td>
+                                {% else %}
+                                    <td><input type="number" value="{{ field.field.initial }}" id="{{ field.id }}" name="{{ field.name }}"></td>
+                                    {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            
+            {{ form.media }}
+
+            <br><br>
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+    <br>
+
+
+    <style>
+        .table-this {
+            border-collapse: collapse;
+            border: 1px solid gray;
+        }
+        .table-this th, .table-this td {
+            border: 1px solid #999;
+            padding: 15px;
+        }
+        .table-this th {
+            background: rgb(214, 214, 214);
+        }
+    </style>
+
+
+
+    
+
+{% endblock %}

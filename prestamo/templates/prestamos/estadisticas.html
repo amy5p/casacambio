@@ -1,0 +1,226 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+
+
+{% block head-extras %}
+    <script type="text/javascript" src={% static "base/js/canvasjs/canvasjs.min.js" %}></script>
+{% endblock head-extras %}
+
+
+
+{% block header %}
+{% endblock header %}
+    
+
+
+
+{% block content %}
+
+{% with stat.Detail as detail %}
+{% with stat.GetStatForMonths as stats %}
+  
+
+
+    
+
+
+
+
+
+    {# GRAFICOS --------------------------------------------------------------- #}
+
+
+    <script>
+
+
+        CanvasJS.addCultureInfo("es", {
+            decimalSeparator: ".",// Observe ToolTip Number Format
+            digitGroupSeparator: ",", // Observe axisY labels
+            days: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+            months: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+        });
+
+        window.onload = function() {
+            graf1();
+            graf2();
+            graf3();
+        }
+
+
+        // ---------------------------------------------------------------
+        // Gráfico de barras.
+        // ---------------------------------------------------------------
+        function graf1() {
+        
+        var chart = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            exportEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            culture: "es",
+            title:{
+                text: "{% trans 'Totales generales' %}"
+            },
+            data: [
+                {
+                type: "column", //change type to bar, line, area, pie, etc
+                //indexLabel: "{y}", //Shows y value on all Data Points
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "outside",
+                dataPoints: [
+                    { y: {{detail.desembolsos.value|escape}}, indexLabel: "{% trans 'Desembolsos' %}" },
+                    { y: {{detail.pagos.value|escape}}, indexLabel: "{% trans 'Pagos' %}" },
+                    { y: {{detail.saldo.value|escape}}, indexLabel: "{% trans 'Adeudado' %}" },
+                ]
+            },
+            ]
+        });
+        chart.render();
+        }
+        // ---------------------------------------------------------------
+        // Gráfico de pastel.
+        // ---------------------------------------------------------------
+        function graf2() {
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            culture: "es",
+            title: {
+                text: "{% trans 'Pagos y desembolsos' %}"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                yvalueFormatString: "$##0.00",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    { y: {{detail.desembolsos.value|escape}}, indexLabel: "{% trans 'Desembolsos' %}" },
+                    { y: {{detail.pagos.value|escape}}, indexLabel: "{% trans 'Pagos' %}" },
+                ]
+            }]
+        });
+        chart.render();
+    }
+    // ---------------------------------------------------------------
+    // Gráfico de linea de tiempo.
+    // ---------------------------------------------------------------
+    function graf3() {
+        var chart = new CanvasJS.Chart("chartContainer3", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            culture: "es",
+            title:{
+                text: "{% trans 'Últimos 12 meses' %}"
+            },
+            axisX:{
+                valueFormatString: "MMMM YYYY",
+                interval: 1,
+                intervalType: "month",
+                crosshair: {
+                    enabled: true,
+                    snapToDataPoint: true
+                }
+            },
+            axisY: {
+                title: "{% trans '' %}",
+                includeZero: false,
+                valueFormatString: "$##0.00",
+                crosshair: {
+                    enabled: true,
+                    snapToDataPoint: true,
+                    labelFormatter: function(e) {
+                        return "$" + CanvasJS.formatNumber(e.value, "##0.00");
+                    }
+                }
+            },
+            data: [
+                {
+                type: "area",
+                color: "#dddddd",
+                xValueFormatString: "MMM YY",
+                yValueFormatString: "$##0.00",
+                name: "Total de movimientos registrados",
+                legendText: "Total de movimientos registrados",
+                showInLegend: true,
+                dataPoints: [
+                        {% for item in stats %}
+                            { x: new Date({{item.fecha.year|escapejs}}, {{item.fecha.month}}-1, 01), y: {{item.stat.movimientos|escape}} },
+                        {% endfor %}
+                    ],
+                },
+                {
+                type: "line",
+                color: "#55aa55",
+                xValueFormatString: "MMM YY",
+                yValueFormatString: "$##0.00",
+                name: "Pagos realizados",
+                legendText: "Pagos realizados",
+                showInLegend: true,
+                dataPoints: [
+                        {% for item in stats %}
+                            { x: new Date({{item.fecha.year|escapejs}}, {{item.fecha.month}}-1, 01), y: {{item.stat.pagos|escape}} },
+                        {% endfor %}
+                    ],
+                },
+                {
+                type: "line",
+                color: "#ff7755",
+                xValueFormatString: "MMM YY",
+                yValueFormatString: "$##0.00",
+                name: "Desembolsos",
+                legendText: "Desembolsos",
+                showInLegend: true,
+                dataPoints: [
+
+                        {% for item in stats %}
+                            { x: new Date({{item.fecha.year|escapejs}}, {{item.fecha.month}}-1, 01), y: {{item.stat.desembolsos|escape}} },
+                        {% endfor %}
+                    ],
+                },
+            ],
+            });
+
+            chart.render();
+        }
+    </script>
+
+
+
+
+    {# DETALLE ------------------------------------------ #}
+    <div>
+        <table class="table1" style="width: 30%">
+            <caption></caption>
+            <tbody>
+                {% for item in stat.Detail %}
+                  <tr>
+                      <th>{{ item.name }}</th>
+                      <td>{{ item.html }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+     </div>
+    <br><br>
+    <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
+    <br><br>
+    <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+    <br><br>
+    <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+    <br><br>
+    
+    
+    
+{% endwith %}
+{% endwith %}
+
+{% endblock content %}
+
+
+{% block credits %}
+     Diseño de gráficos: <a target="_blank" href="https://canvasjs.com/javascript-charts/">CanvasJs</a>
+
+{% endblock credits %}

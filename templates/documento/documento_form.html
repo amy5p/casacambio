@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+{% block content %}
+
+    <div class="form1">
+        <form id="form1" method="POST" class="post-form">{% csrf_token %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+            <table>
+                {{ form.as_table }}
+            </table>
+
+            {% if object.is_borrador == 'false' %}
+            <input type="submit" value="Guardar">
+            {% endif %}
+            
+            {{ form.media }}
+
+            <br>
+            <input type="submit" value="Guardar documento">
+        </form>
+    </div>
+    <br>
+
+
+
+
+
+    
+    
+
+    <script>
+        // Al selecionar el almacén, se filtran solo las cuentas de dicho almacén.
+        $("#id_almacen").change(function() {
+            var id = $("#id_almacen").val();
+            $.ajax({url: "/cuenta/cuenta/json/list/?almacenid="+id, success: function(data) {
+
+                if (data["error"] == true) {
+                    return alert(data["message"]);
+                }
+
+                var select1 = document.getElementById("id_entrada");
+                //var select2 = document.getElementById("id_salida");
+                select1.innerHTML = "";
+                //.innerHTML = "";
+
+                var item;
+                var op;
+
+                // Elemento vacio.
+                op = document.createElement("option");
+                op.text = "-----------";
+                select1.appendChild(op);
+                //op = document.createElement("option");
+                //op.text = "-----------";
+                //select2.appendChild(op);
+
+                for (i = 0; i < data["results"].length; i++) {
+                    item = data["results"][i];
+
+                    op = document.createElement("option");
+                    op.text = item["name"];
+                    op.value = item["id"];
+                    select1.appendChild(op);
+
+                    //op = document.createElement("option");
+                    //op.text = item["name"];
+                    //op.value = item["id"];
+                    //select2.appendChild(op);
+                }
+            }});
+        });
+
+
+
+
+        // Al seleccionar la cuenta de entrada, se establece la tasa
+        // que la moneda de esta tiene configurada, al input 'tasa'.
+        // Si la cuenta de entrada tiene la moneda predeterminada, entonces
+        // la tasa será la de la cuenta de salida, ya que la moneda predeterminada
+        // tendrá su tasa siempre en 1.
+        $("#id_entrada").change(function() {
+            var entrada = $("#id_entrada").val();
+            var salida = $("#id_salida").val();
+            $.ajax({url: "/cuenta/cuenta/json/detail/?id="+entrada, success: function(data) {
+
+                $("#id_tasa").val(data["results"]["moneda__tasa_compra"]["value"]);
+            }});
+        });
+
+
+
+
+        // Calculamos el monto de salida.
+        $("#id_monto_entrada").change(function() {
+            var entrada = document.getElementById("id_entrada").value;
+            var salida = document.getElementById("id_salida").value;
+            var monto = document.getElementById("id_monto_entrada").value;
+            var tasa = document.getElementById("id_tasa").value;
+            $.ajax({url: "/documento/documento/json/calcular/monto-salida/?entrada=" + entrada + "&salida=" + salida + "&monto=" + monto + "&tasa=" + tasa, success: function(data) {
+                if (data["error"] == true) {
+                    return alert(data["message"]);
+                }
+                $("#id_monto_salida").val(data["results"]);
+            }});
+        });
+
+
+    </script>
+    
+    
+
+{% endblock %}
