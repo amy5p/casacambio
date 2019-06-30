@@ -84,7 +84,7 @@ class DocumentoDetailView(LoginRequiredMixin, DetailView):
 
 class DocumentoPrintDetailView(LoginRequiredMixin, DetailView):
     model = Documento
-    template_name = "documento/documento_print.html"
+    template_name = "documento/documento_print2.html"
 
     @utils.context_decorator()
     def get_context_data(self, **kwargs):

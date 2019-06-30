@@ -156,7 +156,7 @@ function printElemento(elemento) {
     var ventana = window.open('', 'PRINT', 'height=400,width=600');
     ventana.document.write('<html><head><title>' + document.title + '</title>');
 
-    //ventana.document.write('<link rel="stylesheet" href="/static/css/base.css">'); //Aquí agregué la hoja de estilos
+    ventana.document.write('<link rel="stylesheet" href="/static/css/base.css">'); //Aquí agregué la hoja de estilos
     ventana.document.write('</head><body >');
     ventana.document.write(elemento.innerHTML);
     ventana.document.write('</body></html>');

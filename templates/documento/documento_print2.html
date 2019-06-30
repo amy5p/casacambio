@@ -87,8 +87,10 @@
     
         window.onload = printOut;
 
+
         function printOut() {
-            printElemento('areaImpresion1');
+            //printElemento('areaImpresion1');
+            window.print();
             window.location.href = "{% url 'documento-documento-factura-create' %}";
         }
     </script>
