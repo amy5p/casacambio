@@ -32,6 +32,7 @@
                             <div>
                                 <input type="submit" value="Buscar">
                                 <input type="button" value="Exportar a CSV" onclick="exportToCSV();">
+                                <input type="button" value="Imprimir" onclick="imprimir();">
                             </div>
                         </td>     
                         <td>
@@ -59,6 +60,10 @@
                 window.location.href = "{% url 'reporte-reporte-export-csv' %}?tipo=dia&almacen={{ request.GET.almacen }}&fecha={{ request.GET.fecha }}";
             }
 
+            function imprimir() {
+                window.location.href = "{% url 'reporte-reporte-dia-print' %}?tipo=dia&almacen={{ request.GET.almacen }}&fecha={{ request.GET.fecha }}";
+            }
+
         </script>
     </form>
     <br>
@@ -78,6 +83,7 @@
                         <th>Entrada</th>
                         <th>Salida</th>
                         <th>Tasa</th>
+                        <th>Ganancia</th>
                     </tr>
                     {% for item in reporte %}
                         <tr>
@@ -89,6 +95,7 @@
                             <td style="text-align: right">{{ item.entrada }}</td>
                             <td style="text-align: right">{{ item.salida }}</td>
                             <td style="text-align: right">{{ item.tasa }}</td>
+                            <td style="text-align: right">{{ item.ganancia }}</td>
                         </tr>
                     {% endfor %}
 

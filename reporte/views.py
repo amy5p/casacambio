@@ -46,6 +46,7 @@ class ReporteDia(ReporteBase):
         self.total_monto = 0
         self.total_ganancia = 0
         self.total_cantidad = 0
+        self.total_ganancia = 0
 
         for obj in qs:
             item = {
@@ -58,6 +59,7 @@ class ReporteDia(ReporteBase):
                 "entrada": obj.GetEntradaString(),
                 "salida": obj.GetSalidaString(),
                 "tasa": obj.GetTasa(),
+                "ganancia": obj.GetGanancia(),
             }
             self.append(item)
 
@@ -193,6 +195,27 @@ class ReporteDiaView(LoginRequiredMixin, TemplateView):
         context["almacenes"] = Almacen.objects.all()
         context["monedas"] = Moneda.objects.all()
         return context
+
+
+
+
+class ReporteDiaPrintView(LoginRequiredMixin, TemplateView):
+    """
+    Listado de los totales para el día indicado.
+    """
+    template_name = "reporte/reporte_dia_print.html"
+
+    @utils.context_decorator()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subtitle"] = _("REPORTE POR DÍA")
+        context["img"] = IMG_REPORTE
+        context["reporte"] = reporte_dia_json(self.request, True)
+        context["almacenes"] = Almacen.objects.all()
+        context["monedas"] = Moneda.objects.all()
+        return context
+
+
 
 
 @login_required()

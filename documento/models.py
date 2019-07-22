@@ -321,6 +321,19 @@ class Documento(models.Model, utils.Texto):
         obj.tasa_salida = tasa2
         return obj.__GetMontoEntrada()
 
+    def GetGanancia(self):
+        factor = Decimal(0.010)
+        if (self.tipo.modo != FACTURA):
+            return Decimal(0)
+        if (self.entrada.moneda.is_principal):
+            ganancia = self.monto_entrada * factor
+        elif (self.salida.moneda.is_principal):
+            ganancia = self.monto_salida * factor
+        else:
+            ganancia = (self.monto_entrada * self.entrada.moneda.tasa_compra) * factor
+        return round(ganancia, 2)
+
+
     def GetSiguienteNumero(self, almacen):
         """
         Obtiene la siguiente secuencia numérica para 
