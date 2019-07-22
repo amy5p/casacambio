@@ -6,15 +6,13 @@
 {% block content %}
 
 
-    <div class="detail" style="clear: left; display: block">
+    <div class="detail" style="clear: left; display: block; font-size: 8px;">
+        <b>Reporte del día {{ reporte.0.fecha }}</b>
         <div>
             <table style="width: 100%">
                 <tbody>
                     <tr>
                         <th>Número</th>
-                        <th>Tipo</th>
-                        <th>Almacén</th>
-                        <th>Fecha</th>
                         <th>Cajero</th>
                         <th>Entrada</th>
                         <th>Salida</th>
@@ -24,9 +22,6 @@
                     {% for item in reporte %}
                         <tr>
                             <td>{{ item.numero }}</td>
-                            <td>{{ item.tipo }}</td>
-                            <td>{{ item.almacen }}</td>
-                            <td>{{ item.fecha }}</td>
                             <td>{{ item.cajero }}</td>
                             <td style="text-align: right">{{ item.entrada }}</td>
                             <td style="text-align: right">{{ item.salida }}</td>
