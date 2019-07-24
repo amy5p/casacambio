@@ -46,7 +46,6 @@ class ReporteDia(ReporteBase):
         self.total_monto = 0
         self.total_ganancia = 0
         self.total_cantidad = 0
-        self.total_ganancia = 0
 
         for obj in qs:
             item = {

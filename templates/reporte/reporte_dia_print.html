@@ -6,43 +6,33 @@
 {% block content %}
 
 <html>
+    <head>
+        <script src="{% static '/js/base.js' %}"></script>
+    </head>
     <body>
-        <div class="detail" style="clear: left; display: block; font-size: 8px;">
-            <h1>Reporte del día {{ reporte.0.fecha }}</h1>
+        <div class="detail" id="areaImpresion" style="clear: left; display: block">
+            <div style="text-align: center">
+                <h1>{% empresa %}</h1>
+                <h2>ALMACÉN: {{ reporte.0.almacen }}</h2>
+                <h2>REPORTE POR FECHA</h2>
+                <h3>{{ reporte.0.fecha }}</h3>
+            </div>
+            <hr style="border: 1px solid black">
             <div>
-                <table style="width: 100%">
-                    <tbody>
-                        <tr>
-                            <th>Número</th>
-                            <th>Cajero</th>
-                            <th>Entrada</th>
-                            <th>Salida</th>
-                            <th>Tasa</th>
-                            <th>Ganancia</th>
-                        </tr>
-                        {% for item in reporte %}
-                            <tr>
-                                <td>{{ item.numero }}</td>
-                                <td>{{ item.cajero }}</td>
-                                <td style="text-align: right">{{ item.entrada }}</td>
-                                <td style="text-align: right">{{ item.salida }}</td>
-                                <td style="text-align: right">{{ item.tasa }}</td>
-                                <td style="text-align: right">{{ item.ganancia }}</td>
-                            </tr>
-                        {% endfor %}
-    
-                        <tr class="total">
-                        </tr>
-    
-                    </tbody>
-                </table>
+                {% for item in reporte %}
+                    <div style="width: 100%; border-bottom: 1px dashed black">
+                        <p>No: <b>{{ item.numero }}</b>, Caj.: <b>{{ item.cajero }}</b></p>
+                        <p><b>{{ item.entrada }}</b> &rarr; <b>{{ item.salida }}</b></p>
+                        <p>Tasa: <b>{{ item.tasa }}</b> Ganancia: <b>{{ item.ganancia }}</b></p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
         
 
         <style>
             * {
-                font-size: 8px;
+                font-size: 12px;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
             td, th {
@@ -54,8 +44,21 @@
             table {
                 width: 100%;
             }
+            p {
+                margin: 1px;
+            }
 
         </style>
+
+
+        <script>
+            window.onload = printOut;
+
+            function printOut() {
+                printElemento('areaImpresion');
+                //window.history.back();
+            }
+        </script>
     </body>
 </html>
 
