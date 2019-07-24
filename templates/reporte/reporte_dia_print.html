@@ -9,8 +9,8 @@
     <head>
         <script src="{% static '/js/base.js' %}"></script>
     </head>
-    <body>
-        <div class="detail" id="areaImpresion" style="clear: left; display: block">
+    <body id="areaImpresion">
+        <div class="detail" style="clear: left; display: block">
             <div style="text-align: center">
                 <h1>{% empresa %}</h1>
                 <h2>ALMACÉN: {{ reporte.0.almacen }}</h2>
@@ -32,7 +32,7 @@
 
         <style>
             * {
-                font-size: 12px;
+                font-size: 14px;
                 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             }
             td, th {
