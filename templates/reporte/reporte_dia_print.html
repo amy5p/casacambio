@@ -18,7 +18,7 @@
                         <h2>REPORTE POR FECHA</h2>
                         <h3>{{ reporte.0.fecha }}</h3>
                     </div>
-                    <hr style="border: 1px solid black">
+                    
                     <div>
                         {% for item in reporte %}
                             <div style="width: 100%; border-bottom: 1px dashed black">
@@ -27,6 +27,17 @@
                                 <p>Tasa: <b>{{ item.tasa }}</b> Ganancia: <b>{{ item.ganancia }}</b></p>
                             </div>
                         {% endfor %}
+                    </div>
+                    <br>
+                    <hr style="border: 1px solid black">
+                    <br>
+                    <div>
+                        <h1>TOTALES</h1>
+                        <p>{{ reporte.total_cantidad }} registros.</p>
+                        {% for key, value in reporte.total_monto.items %}
+                          <p><b>{{ key }}: </b>{{ value }}</p>
+                        {% endfor %}
+                        <p><b>Ganancia: </b>{{ reporte.total_ganancia }}</p>
                     </div>
                 </div>
                 
@@ -57,8 +68,8 @@
             window.onload = printOut;
 
             function printOut() {
-                printElemento('area1');
-                window.history.back();
+                window.print();
+                setTimeout(function() {window.history.back();}, 100);
             }
         </script>
     </body>
