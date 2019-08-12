@@ -8,3 +8,5 @@ from .models import *
 
 admin.site.register(Prestamo)
 admin.site.register(Solicitud)
+admin.site.register(Transaccion)
+admin.site.register(Cuenta)

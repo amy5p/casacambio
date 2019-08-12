@@ -73,14 +73,13 @@ class PersonaUpdateView(LoginRequiredMixin, UpdateView):
 # -----------------------------------------------------------------------
 
 class PersonaAutocomplete(autocomplete.Select2QuerySetView, utils.Texto):
-    model = Persona
 
     def get_queryset(self):
         # ¡No olvides filtrar los resultados dependiendo del visitante!
         if not self.request.user.is_authenticated:
-            return self.model.objects.none()
+            return Persona.objects.none()
 
-        qs = self.model.objects.all()
+        qs = Persona.objects.all()
 
         if self.q:
             q = self.GetEtiqueta(self.q, False)

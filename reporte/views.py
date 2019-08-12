@@ -43,7 +43,7 @@ class ReporteDia(ReporteBase):
     def __init__(self, qs):
         dic = {}
         fechas = []
-        self.total_monto = 0
+        self.total_monto = {}
         self.total_ganancia = 0
         self.total_cantidad = 0
 
@@ -60,6 +60,13 @@ class ReporteDia(ReporteBase):
                 "tasa": obj.GetTasa(),
                 "ganancia": obj.GetGanancia(),
             }
+            self.total_cantidad += 1
+            self.total_ganancia += obj.GetGanancia()
+            try:
+                self.total_monto[str(obj.entrada)] += obj.monto_entrada
+            except (KeyError):
+                self.total_monto[str(obj.entrada)] = obj.monto_entrada
+        
             self.append(item)
 
         

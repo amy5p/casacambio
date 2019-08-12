@@ -91,11 +91,11 @@
     
         window.onload = printOut;
 
-
         function printOut() {
             //printElemento('areaImpresion1');
             window.print();
-            window.location.href = "{% url 'documento-documento-factura-create' %}";
+            setTimeout(function () { window.location.href = "{% url 'documento-documento-factura-create' %}"; }, 100);
+            //window.location.href = "{% url 'documento-documento-factura-create' %}";
         }
     </script>
 

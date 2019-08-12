@@ -26,10 +26,11 @@ class PrestamoForm(forms.ModelForm):
 
     class Meta:
         model = Prestamo
-        exclude = ("id", "cuenta", "tags", "author")
+        fields = ("cliente", "monto", "tasa", "periodo", "cuotas", "cuotas_tipo", "mora", "fecha_inicio", "note", "isactive")
 
-    cliente = forms.ModelChoiceField(label=_("Cliente"), queryset=Persona.objects.all(), widget=autocomplete.ModelSelect2(url="persona-persona-json-list"))
-
+    __nowStr = timezone.now().strftime("%Y-%m-%d")
+    cliente = forms.ModelChoiceField(label=_("Cliente"), queryset=Persona.objects.all(), widget=autocomplete.ModelSelect2(url="persona-persona-json-list", attrs={"data-placeholder": _("Buscar cliente..."), "data-html": True, "style": "width: 20px"}))
+    fecha_inicio = forms.DateField(label=_("Fecha de inicio"), widget=forms.DateInput(attrs={"type": "date", "value": __nowStr}))
         
 
 class PrestamoDesembolsarForm(forms.ModelForm):

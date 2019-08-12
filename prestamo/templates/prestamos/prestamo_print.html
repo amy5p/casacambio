@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load humanize %}
-
+{% load tags %}
 
 
 
@@ -17,26 +17,15 @@
 
 {% block content %}
 
-
     <div class="detail">
+        <div style="text-align: center">
+            <h1>{% empresa "razon_social" %}</h1>
+            <h3>{% empresa "identificacion_tipo" %}: {% empresa "identificacion" %}</h3>
+            <p>{{ object.almacen.ubicacion }}</p>
+            <p>Tel.: {{ object.almacen.telefonos }}</p>
+        </div>
+        <hr>
         
-
-        <table style="background: #eee; padding: 5px; width: 100%;">
-            <tbody>
-                <tr>
-                    <td rowspan="3" style="padding: 0px"><img src="{{ conf.company_logo }}" alt="" style="height: 60px; margin: auto; text-align: center"></td>
-                    <td>{{ conf.company_email }}</td>
-                </tr>
-                <tr>
-                    <td>{{ conf.company_web }}</td>
-                </tr>
-                <tr>
-                    <td>{{ conf.company_direccion }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <br>
-
         <table class="table1" style="width: 100%">
             <tbody>
                 <tr>
@@ -82,8 +71,6 @@
         </div>
     {% endif %}
 
-
-
     {% if request.GET.part == 'comportamiento' %}
         <div class="detail">
             {% with object.GetComportamiento as comp %}
@@ -123,7 +110,32 @@
     <p style="text-align: center">- - - - - - - - - -  {% trans "FIN DEL DOCUMENTO" %}  - - - - - - - - - -</p>
 
 
+    <style>
 
-
+        table {
+            border-collapse: collapse;
+        }
+        table caption {
+            border: 1px solid black;
+            background: #e2e2e2;
+            font-weight: bold;
+            font-size: large;
+        }
+        table td {
+            border: 1px solid black;
+        }
+        table th {
+            border: 1px solid black;
+            background: #e2e2e2;
+        }
+        .tableamortizacion td, .tableamortizacion th {
+            text-align: right;
+            padding: 3px;
+        }
+        .total {
+            background: #e2e2e2;
+            font-weight: bold;
+        }
+    </style>
 
 {% endblock content %}

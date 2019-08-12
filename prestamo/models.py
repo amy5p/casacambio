@@ -479,8 +479,9 @@ class Prestamo(models.Model, utils.PrestamoBase, utils.Texto):
     Gestión de préstamos. Aqui se almacenan los préstamos de
     los diferentes clientes.
     """
+    almacen = models.ForeignKey("almacen.Almacen", verbose_name=_("Almacén"), on_delete=models.PROTECT)
     cuenta = models.ForeignKey(Cuenta, verbose_name=_("Cuenta"), blank=True, null=True, default=None, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(Persona, verbose_name=_("Cliente"), on_delete=models.PROTECT)
+    cliente = models.ForeignKey("persona.Persona", verbose_name=_("Cliente"), on_delete=models.PROTECT)
     monto = models.DecimalField(_("Monto"), max_digits=12, decimal_places=2, validators=[MinValueValidator(0, _("El monto debe ser mayor o igual a 0.")), MaxValueValidator(9999999999.99)], help_text=_("Monto del préstamo."))
     tasa = models.DecimalField(_("Tasa de interés"), max_digits=5, decimal_places=2, validators=[MinValueValidator(0), MaxValueValidator(100)])
     cuotas = models.IntegerField(_("Cantidad de cuotas"), validators=[MinValueValidator(1, _("La cantidad de cuotas debe ser mayor que 0."))])

@@ -1,0 +1,48 @@
+{% load static %}
+{% load tags %}
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="{{ description }}" />
+		<meta name="keywords" content="{{ keywords }}" />
+
+		<!-- Scripts -->
+		<script src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+		<script src="{% static '/js/jquery.min.js' %}"></script>
+		<script src="{% static '/js/base.js' %}"></script>
+	</head>
+	<body class="is-preload">
+
+		{% block content %}
+		{% endblock %}
+	</body>
+
+
+	<style>
+		p, h1, h2, h3, h4 {
+			margin: 0px;
+		}
+
+		body {
+			font-family: calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+		}
+	</style>
+
+
+	<script>
+		window.onload = printOut;
+
+		function printOut() {
+			//printElemento('areaImpresion1');
+			window.print();
+			setTimeout(function () { window.history.back(); }, 1000);
+			//window.location.href = "{% url 'documento-documento-factura-create' %}";
+		}
+	</script>
+</html>

@@ -15,6 +15,7 @@
             <form action="" id="form1" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
+                {{ form.media }}
                 <a class="button1" onclick="document.getElementById('form1').submit();" title="Guardar"><img src="{{ IMG_SAVE }}" alt="Guardar"></a>
                 <a class="button1" href="{% url 'prestamo-prestamo-list' %}" title="Cancelar"><img src="{{ IMG_CANCEL }}" alt="Cancelar"></a>
             </form>
