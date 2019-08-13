@@ -11,6 +11,7 @@ from dal import autocomplete
 from fuente import utils
 from .models import Solicitud, Prestamo, Cuenta, Transaccion
 from persona.models import Persona
+from almacen.models import Almacen
 from fuente.var import *
 
 
@@ -26,10 +27,11 @@ class PrestamoForm(forms.ModelForm):
 
     class Meta:
         model = Prestamo
-        fields = ("cliente", "monto", "tasa", "periodo", "cuotas", "cuotas_tipo", "mora", "fecha_inicio", "note", "isactive")
+        fields = ("almacen", "cliente", "monto", "tasa", "periodo", "cuotas", "cuotas_tipo", "mora", "fecha_inicio", "note", "isactive")
 
     __nowStr = timezone.now().strftime("%Y-%m-%d")
     cliente = forms.ModelChoiceField(label=_("Cliente"), queryset=Persona.objects.all(), widget=autocomplete.ModelSelect2(url="persona-persona-json-list", attrs={"data-placeholder": _("Buscar cliente..."), "data-html": True, "style": "width: 20px"}))
+    almacen = forms.ModelChoiceField(label=_("Almacén"), queryset=Almacen.objects.all(), widget=autocomplete.ModelSelect2(url="almacen-almacen-json-list", attrs={"data-placeholder": _("Buscar almacén..."), "data-html": True, "style": "width: 20px"}))
     fecha_inicio = forms.DateField(label=_("Fecha de inicio"), widget=forms.DateInput(attrs={"type": "date", "value": __nowStr}))
         
 

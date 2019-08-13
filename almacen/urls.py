@@ -7,7 +7,8 @@ urlpatterns = [
     path("almacen/list/<int:pk>/update/", AlmacenUpdateView.as_view(), name="almacen-almacen-update"),
     
 
-
+    # AUTOCOMPLETE-LIGHT
+    path("almacen/json/list/", AlmacenAutocomplete.as_view(), name="almacen-almacen-json-list"),
 
 ]
 
