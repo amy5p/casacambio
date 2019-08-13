@@ -59,11 +59,11 @@
                     {% for item in object.GetAmortizacion %}
                     <tr class="{{ item.clase }}">
                         <td>{{ item.cuota }}</td>
-                        <td>{{ item.fecha|date:"d M Y" }}</td>
-                        <td>{{ item.valor|intcomma }}</td>
-                        <td>{{ item.interes|intcomma }}</td>
-                        <td>{{ item.capital|intcomma }}</td>
-                        <td>{{ item.capital_restante|intcomma }}</td>
+                        <td>{{ item.fecha|date:"d/m/y" }}</td>
+                        <td>{{ item.valor|moneda:"" }}</td>
+                        <td>{{ item.interes|moneda:"" }}</td>
+                        <td>{{ item.capital|moneda:"" }}</td>
+                        <td>{{ item.capital_restante|moneda:"" }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -94,11 +94,11 @@
                             <td>{{ item.corte }}</td>
                             <td>{{ item.interes }}</td>
                             <td>{{ item.capital }}</td>
-                            <td>{{ item.apagar|intcomma }}</td>
-                            <td>{{ item.porpagar|intcomma }}</td>
-                            <td>{{ item.pagado|intcomma }}</td>
-                            <td>{{ item.mora|intcomma }}</td>
-                            <td>{{ item.saldo_anterior|intcomma }}</td>
+                            <td>{{ item.apagar|moneda:"" }}</td>
+                            <td>{{ item.porpagar|moneda:"" }}</td>
+                            <td>{{ item.pagado|moneda:"" }}</td>
+                            <td>{{ item.mora|moneda:"" }}</td>
+                            <td>{{ item.saldo_anterior|moneda:"" }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -123,10 +123,12 @@
         }
         table td {
             border: 1px solid black;
+            font-size: small;
         }
         table th {
             border: 1px solid black;
             background: #e2e2e2;
+            font-size: small;
         }
         .tableamortizacion td, .tableamortizacion th {
             text-align: right;
