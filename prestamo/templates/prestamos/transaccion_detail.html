@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+
+
+
+
+{% block content %}
+    {# DETALLE DEL OBJECTO --------------------------#}
+    <div class="detail"> 
+        <div style="width: 50%;">
+            <table class="table-detail">
+                <tbody>
+                    {% for item in object.Detail %}
+                        <tr id="{{ item.field }}">
+                            <th>{{ item.name }}</th>
+                            <td title="{{ item.help }}">{{ item.display }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

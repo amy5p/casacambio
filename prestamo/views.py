@@ -228,7 +228,7 @@ class CuentaDetailView(LoginRequiredMixin, DetailView):
     Muestra el detalle de una cuenta.
     """
     model = Cuenta
-    template_name = "contabilidad/cuenta_detail.html"
+    template_name = "prestamos/cuenta_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -249,7 +249,7 @@ class TransaccionCreateView(LoginRequiredMixin, CreateView):
     Crea una transacción.
     """
     model = Transaccion
-    template_name = "contabilidad/transaccion_create.html"
+    template_name = "prestamos/transaccion_create.html"
     form_class = TransaccionForm
 
     def get_context_data(self, **kwargs):
@@ -275,7 +275,7 @@ class TransaccionDetailView(LoginRequiredMixin, DetailView):
     Muestra el detalle de una transacción.
     """
     model = Transaccion
-    template_name = "contabilidad/transaccion_detail.html"
+    template_name = "prestamos/transaccion_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

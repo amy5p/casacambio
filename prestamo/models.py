@@ -257,7 +257,7 @@ class Stat(utils.PrestamoBase):
         """
         Detalle general para mostrar en las plantillas.
         """
-        d = Detail()
+        d = utils.Detail()
         d.Add("count", "Cantidad de préstamos", self.Count())
         d.Add("firstdate", "Fecha del primer registro", self.GetFirst().FechaInicio())
         d.Add("lastdate", "Fecha del último registro", self.GetLast().FechaInicio())
@@ -331,9 +331,10 @@ class Cuenta(models.Model):
         return reverse_lazy("prestamo-cuenta-detail", kwargs={"pk": self.pk})
 
     def Detail(self):
-        return (
-            ("self", (_("Detalle de la cuenta"), str(self))),
-        )
+        return utils.Detail(self)
+
+    def GetDetail(self):
+        return self.Detail()
 
     def GetImg(self):
         return IMG_CUENTA
@@ -417,7 +418,7 @@ class Transaccion(models.Model, utils.Fecha):
         return super().clean()
 
     def Detail(self, notnull=True):
-        d = Detail()
+        d = utils.Detail()
         d.Add("desde", "Origen", self.desde, html=self.Desde())
         d.Add("hacia", "Destino", self.hacia, html=self.Hacia())
         d.Add("monto", "Monto", self.monto)
@@ -428,6 +429,9 @@ class Transaccion(models.Model, utils.Fecha):
         d.Add("author", "Creado por", self.author, html=self.Author())
         d.Add("note", "Nota", self.note)
         return d
+
+    def GetDetail(self):
+        return self.Detail()
 
     # Fields -------------------------------------------------------
 
@@ -465,7 +469,7 @@ class Transaccion(models.Model, utils.Fecha):
 
     def Author(self, html=True):
         if (html == True) and (self.desde):
-            return '<a class="object" href="{href}">{name}</a>'.format(href=self.author.get_absolute_url(), name=str(self.author))
+            return '<a class="object" href="{href}">{name}</a>'.format(href="", name=str(self.author))
         return str(self.author)
 
     # End fields ---------------------------------------------------

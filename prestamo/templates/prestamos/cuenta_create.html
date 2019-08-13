@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% load tags %}
+
+
+
+    
+
+
+
+{% block content %}
+    <div style="padding: 20px; width: 600px">
+        <div class="form_p">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr class="line1">
+                <input type="submit" value="{% trans 'Guardar' %}">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
