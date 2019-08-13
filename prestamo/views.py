@@ -240,7 +240,7 @@ class CuentaDetailView(LoginRequiredMixin, DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         # Detecta si es un dispositivo movil y obtiene la ruta de la plantilla 
-        self.template_name = mobile.getTemplate(request, self.template_name)
+        #self.template_name = mobile.getTemplate(request, self.template_name)
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -262,7 +262,7 @@ class TransaccionCreateView(LoginRequiredMixin, CreateView):
 
     def dispatch(self, request):
         # Detecta si es un dispositivo movil y obtiene la ruta de la plantilla 
-        self.template_name = mobile.getTemplate(request, self.template_name)
+        #self.template_name = mobile.getTemplate(request, self.template_name)
         return super().dispatch(request)
 
     def form_valid(self, form):
@@ -287,7 +287,7 @@ class TransaccionDetailView(LoginRequiredMixin, DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         # Detecta si es un dispositivo movil y obtiene la ruta de la plantilla 
-        self.template_name = mobile.getTemplate(request, self.template_name)
+        #self.template_name = mobile.getTemplate(request, self.template_name)
         return super().dispatch(request, *args, **kwargs)
 
 
