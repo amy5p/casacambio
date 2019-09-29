@@ -307,7 +307,7 @@ class Stat(utils.PrestamoBase):
 
 
 
-class Cuenta(models.Model):
+class Cuenta(models.Model, utils.Texto):
     """
     Gestión de cuentas. Es una cuenta contable, capaz de
     que se realicen transacciones con ella.
@@ -317,7 +317,7 @@ class Cuenta(models.Model):
     numero = models.CharField(_("Número"), unique=True, max_length=8)
     user = models.ForeignKey(User, verbose_name=_("Usuario"), on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, help_text=_("Usuario que creó esto."))
     fecha_creacion = models.DateTimeField(_("Fecha de creación"), auto_now_add=True)
-    tags = models.CharField(max_length=200, blank=True)
+    tags = models.TextField(blank=True, editable=False)
 
     class Meta:
         verbose_name = _("Cuenta")
@@ -329,6 +329,10 @@ class Cuenta(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy("prestamo-cuenta-detail", kwargs={"pk": self.pk})
+
+    def clean(self):
+        self.tags = self.GetEtiquetas((self.numero, self.user, self.fecha_creacion))
+        self.tags += self.cliente.tags 
 
     def Detail(self):
         return utils.Detail(self)
@@ -374,7 +378,7 @@ class Transaccion(models.Model, utils.Fecha):
     fecha_creacion = models.DateTimeField(_("Fecha de entrada"), auto_now_add=True)
     note = models.TextField(_("Nota"), blank=True)
     author = models.ForeignKey(User, verbose_name=_("Creado por"), on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    tags = models.CharField(max_length=200, blank=True)
+    tags = models.TextField(blank=True, editable=False)
 
     class Meta:
         verbose_name = _("Transacción")
@@ -497,7 +501,7 @@ class Prestamo(models.Model, utils.PrestamoBase, utils.Texto):
     fecha_creacion = models.DateTimeField(_("Fecha de creación"), auto_now_add=True)
     isactive = models.BooleanField(_("¿Está activo?"), default=True, help_text=_("Indica si el préstamos estará o no disponible, si no está activo entonces no se tomará en cuenta para los cálculos."))
     author = models.ForeignKey(User, verbose_name=_("Creado por"), on_delete=models.SET_NULL, blank=True, null=True, default=None)
-    tags = models.CharField(max_length=200, blank=True)
+    tags = models.TextField(blank=True, editable=False)
 
     class Meta:
         verbose_name = _("Préstamo")
@@ -515,6 +519,10 @@ class Prestamo(models.Model, utils.PrestamoBase, utils.Texto):
 
     def get_absolute_url(self):
         return reverse_lazy("prestamo-prestamo-detail", kwargs={"pk": self.pk})
+
+    def clean(self):
+        self.tags = self.GetEtiquetas((self.almacen, self.cuenta.numero, self.monto, self.tasa))
+        self.tags += self.cliente.tags
 
     def save(self, *args, **kwargs):
         """

@@ -8,5 +8,6 @@ env
 .idea
 *.sqlite3
 mysql.cnf
+db.json
 media/*
 

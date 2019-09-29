@@ -142,8 +142,8 @@ class Documento(models.Model, utils.Texto):
             self.ganancia = 0
 
         # Etiquetas
-        tags = self.GetEtiquetas((self.numero, str(self.almacen), str(self.persona), str(self.fecha), self.nota, str(self.entrada), str(self.salida)))
-        self.tags = tags[:512]
+        tags = self.GetEtiquetas((self.numero, str(self.almacen), str(self.persona), str(self.fecha), str(self.entrada), str(self.salida), self.monto_entrada, self.monto_salida, str(self.cajero)))
+        self.tags += self.GetEtiqueta(self.nota, False)
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):

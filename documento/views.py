@@ -1,4 +1,5 @@
 import decimal
+import datetime
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from django.http import JsonResponse
@@ -24,6 +25,8 @@ from fuente import utils
 
 class DocumentoListView(LoginRequiredMixin, ListView, utils.Texto):
     model = Documento
+    paginate_by = 300
+    
 
     @utils.context_decorator()
     def get_context_data(self, **kwargs):
@@ -61,11 +64,20 @@ class DocumentoListView(LoginRequiredMixin, ListView, utils.Texto):
         else:
             qs = self.model.objects.filter(tags__icontains=q)
 
-        if (year != 0):
+        if (year) and (month) and (day):
+            date = datetime.date(year, month, day)
+            qs = qs.filter(fecha=date) 
+        elif (year) and (month):
+            qs = qs.filter(fecha__year=year, fecha__month=month)
+        elif (year) and (day):
+            qs = qs.filter(fecha__year=year, fecha__day=day)
+        elif (month) and (day):
+            qs = qs.filter(fecha__month=month, fecha__day=day)
+        elif (year):
             qs = qs.filter(fecha__year=year)
-        if (month != 0):
+        elif (month):
             qs = qs.filter(fecha__month=month)
-        if (day != 0):
+        elif (day):
             qs = qs.filter(fecha__day=day)
 
         self.queryset = qs

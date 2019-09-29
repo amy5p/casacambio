@@ -20,8 +20,7 @@ class Moneda(models.Model, utils.Texto):
     tasa_compra = models.DecimalField(_("Tasa de compra"), max_digits=5, decimal_places=2, validators=[MinValueValidator(0)], help_text=_("Tasa en la que la Empresa le compra al cliente."))
     tasa_venta = models.DecimalField(_("Tasa de venta"), max_digits=5, decimal_places=2, validators=[MinValueValidator(0)], help_text=_("Tasa en la que la Empresa le vende al cliente."))
     is_principal = models.BooleanField(_("¿Es principal?"), default=False, help_text=_("Indica que esta moneda es la principal (solo puede existir una sola moneda como principal)"))
-    tags = models.CharField(blank=True, max_length=512, editable=False)
-
+    tags = models.TextField(blank=True, editable=False)
     # Auditoria
     history = HistoricalRecords()
 
@@ -64,7 +63,7 @@ class Moneda(models.Model, utils.Texto):
             if (self.tasa_venta > 999):
                 raise ValidationError({"tasa_venta": _("La tasa de venta debe ser menor que 1,000")})
 
-        self.tags = self.GetEtiquetas((self.simbolo, self.nombre))[:512]
+        self.tags = self.GetEtiquetas((self.simbolo, self.nombre))
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):

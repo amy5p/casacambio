@@ -6,11 +6,5 @@ from django.db import models
 
 
 
-class Reporte(models.Model):
-    """
-    Reportes
-    """
-    
-
 
 

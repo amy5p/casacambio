@@ -796,3 +796,46 @@ Es una imagen seguida de un texto. */
   border-color: white !important;
   font-weight: bold;
 }
+
+
+
+
+
+
+
+/* PAGINATOR --------------*/
+.pagination {
+  width: 100%;
+  background: rgba(1, 1, 1, 0.2);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block;
+  padding: 1px;
+}
+.pagination ul {
+  list-style-type: none;
+  display: block;
+}
+.pagination li {
+  display: inline-flex;
+  margin: 0px;
+}
+.pagination li a {
+color: white;
+text-align: center;
+text-decoration: none;
+padding: 15px;
+background: white;
+color: black;
+}
+.pagination .other:hover {
+  background: gray;
+}
+.pagination .disabled a {
+  background: #ddd;
+}
+.pagination .active a {
+  background: black;
+  color: white;
+  font-weight: bold;
+}

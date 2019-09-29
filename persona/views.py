@@ -18,6 +18,7 @@ class PersonaListView(LoginRequiredMixin, ListView):
     Listado de personas.
     """
     model = Persona
+    paginate_by = 200
 
     @utils.context_decorator()
     def get_context_data(self, **kwargs):

@@ -41,7 +41,7 @@ class Almacen(models.Model, utils.Texto):
     def clean(self, *args, **kwargs):
         self.codigo = self.codigo.upper()
         self.nombre = self.nombre.upper()
-        self.tags = self.GetEtiquetas((self.codigo, self.nombre, self.ubicacion, self.empresa.tags))[:512]
+        self.tags = self.GetEtiquetas((self.codigo, self.nombre, self.ubicacion, self.empresa.tags))
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):

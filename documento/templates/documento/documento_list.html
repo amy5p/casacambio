@@ -65,25 +65,57 @@
         <table class="table-list" style="width: 100%">
             <tbody>
                 <tr>
-                    <th></th>
                     <th>Número</th>
                     <th>Almacén</th>
                     <th>Tipo</th>
                     <th>Fecha</th>
                     <th>Cliente/Suplidor</th>
+                    <th style="text-align: right">Tasa</th>
+                    <th style="text-align: right">Entrada</th>
+                    <th style="text-align: right">Salida</th>
+                    <th>Cajero</th>
                 </tr>
                 {% for obj in object_list  %}
                   <tr onclick="goToURL('{{ obj.get_absolute_url }}');">
-                      <td><img src="{{ obj.GetImg }}" alt=""></td>
                       <td>{{ obj.numero }}</td>
                       <td>{{ obj.almacen }}</td>
-                      <td>{{ obj.tipo }}</td>
+                      <td>{{ obj.tipo.codigo }} ({{ obj.tipo.modo }})</td>
                       <td>{{ obj.fecha }}</td>
                       <td>{{ obj.persona }}</td>
+                      <td style="text-align: right">{{ obj.GetTasa }}</td>
+                      <td style="text-align: right">{{ obj.entrada.moneda.simbolo }} {{ obj.monto_entrada|moneda:"" }}</td>
+                      <td style="text-align: right">{{ obj.salida.moneda.simbolo }} {{ obj.monto_salida|moneda:"" }}</td>
+                      <td>{{ obj.cajero }}</td>
                   </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <br><br>
+
+        {% if is_paginated %}
+            <div class="pagination">
+                 <ul>
+                    {% if page_obj.has_previous %}
+                      <li><a class="other" href="?page={{ page_obj.previous_page_number }}" title="Página anterior">&laquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><a>&laquo;</a></li>
+                    {% endif %}
+                    {% for i in paginator.page_range %}
+                      {% if page_obj.number == i %}
+                        <li class="active"><a title="Página actual">{{ i }}</a></li>
+                      {% else %}
+                        <li><a class="other" href="?page={{ i }}" title="Página {{ i }}">{{ i }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                      <li><a class="other" href="?page={{ page_obj.next_page_number }}" title="Página siguiente">&raquo;</a></li>
+                    {% else %}
+                      <li class="disabled"><a>&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}

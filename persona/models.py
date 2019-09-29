@@ -23,14 +23,12 @@ class Persona(models.Model, utils.Texto):
     telefono1 = models.CharField(_("Teléfono"), max_length=20, blank=True)
     telefono2 = models.CharField(_("Celular"), max_length=20, blank=True)
     email = models.EmailField(_("Correo electrónico"), blank=True)
-    direccion = models.CharField(_("Dirección"), max_length=256, blank=True)
+    direccion = models.CharField(_("Dirección"), max_length=255, blank=True)
     # Persona de contacto.
     persona_de_contacto_nombre = models.CharField(_("Nombre de la persona de contacto"), max_length=100, blank=True)
     persona_de_contacto_identificacion = models.CharField(_("Identificación de la persona de contacto"), max_length=20, blank=True)
     persona_de_contacto_telefono = models.CharField(_("Teléfono de la persona de contacto"), max_length=20, blank=True)
-
-    tags = models.CharField(blank=True, max_length=512, editable=False)
-
+    tags = models.TextField(blank=True, editable=False)
     # Auditoria
     history = HistoricalRecords()
 
@@ -51,7 +49,7 @@ class Persona(models.Model, utils.Texto):
         self.tags = self.GetEtiquetas((self.identificacion, self.nombre, self.razon_social, self.telefono1, 
             self.telefono2, self.email, self.direccion, self.persona_de_contacto_nombre, 
             self.persona_de_contacto_identificacion, self.persona_de_contacto_telefono)
-        )[:512]
+        )
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):

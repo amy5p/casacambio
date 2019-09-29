@@ -43,7 +43,7 @@ class Cuenta(models.Model, utils.Texto):
             if other != self:
                 raise ValidationError({"moneda": _("Ya existe una cuenta de {} en el almacén {}".format(self.moneda, self.almacen))})
 
-        self.tags = self.GetEtiquetas((self.moneda.simbolo, self.moneda.nombre, str(self.almacen)))[:512]
+        self.tags = self.GetEtiquetas((self.moneda.simbolo, self.moneda.nombre, str(self.almacen)))
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):
