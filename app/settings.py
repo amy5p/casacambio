@@ -72,7 +72,7 @@ MIDDLEWARE = [
     #'auditoria.middleware.RequestMiddleware',
 ]
 
-ROOT_URLCONF = 'casacambio.urls'
+ROOT_URLCONF = 'app.urls'
 
 TEMPLATES = [
     {
@@ -91,19 +91,69 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'casacambio.wsgi.application'
+WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+sqlite3 = {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 }
 
+mysql_pythonanywhere = {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'wilmermartinez$rubiera',
+    'USER': 'wilmermartinez',
+    'PASSWORD': 'HolaMundo',
+    'HOST': 'wilmermartinez.mysql.pythonanywhere-services.com',
+    'TEST': {
+        'NAME': 'wilmermartinez$test',
+    },
+}
+mysql_localhost = {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'inventario',
+    'USER': 'root',
+    'PASSWORD': 'HolaMundo',
+    'HOST': 'localhost',
+    'PORT': '3306',
+    'TEST': {
+        'NAME': 'inventario_test',
+    },
+}
+
+mysql_from_file = {
+    'ENGINE': 'django.db.backends.mysql',
+    'OPTIONS': {
+        'read_default_file': os.path.join(BASE_DIR, 'mysql.cnf'),
+    },
+}
+
+DATABASES = {
+    'default': mysql_from_file,
+}
+
+
+
+# Password validation
+# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

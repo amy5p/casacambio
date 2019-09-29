@@ -18,8 +18,7 @@ class Cuenta(models.Model, utils.Texto):
     """
     moneda = models.ForeignKey("moneda.Moneda", verbose_name=_("Moneda"), on_delete=models.CASCADE, help_text=_("Tipo de moneda de esta cuenta"))
     almacen = models.ForeignKey("almacen.Almacen", verbose_name=_("Almacén"), on_delete=models.CASCADE, help_text=_("Almacén al que pertenece la cuenta"))
-    tags = models.CharField(blank=True, max_length=512, editable=False)
-
+    tags = models.TextField(blank=True, editable=False)
     orden = models.IntegerField("Orden", default=0, blank=True, null=True)
     # Auditoria
     history = HistoricalRecords()

@@ -7,3 +7,6 @@ env
 .vscode
 .idea
 *.sqlite3
+mysql.cnf
+media/*
+

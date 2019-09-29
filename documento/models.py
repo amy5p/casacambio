@@ -66,7 +66,7 @@ class Documento(models.Model, utils.Texto):
     is_print = models.BooleanField(_("¿Se imprimió?"), default=False)
 
     nota = models.TextField(_("Nota"), blank=True)
-    tags = models.CharField(blank=True, max_length=512, editable=False)
+    tags = models.TextField(blank=True, editable=False)
 
     # Audiroría
     history = HistoricalRecords()

@@ -20,7 +20,7 @@ class Error(models.Model):
     Registro de los errores producidos en el Sistema.
     """
     user = models.ForeignKey(User, verbose_name=_("Usuario"), on_delete=models.CASCADE, null=True, default=None, blank=True)
-    title = models.CharField(_("Título"), max_length=256, blank=True)
+    title = models.CharField(_("Título"), max_length=255, blank=True)
     description = models.TextField(_("Descripción"), blank=True)
     appname = models.CharField(_("Aplicación"), max_length=50)
     module = models.CharField(_("Módulo"), max_length=50)
@@ -226,4 +226,4 @@ def inicializacion():
 
     
 
-inicializacion()
+#inicializacion()

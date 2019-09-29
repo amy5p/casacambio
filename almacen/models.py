@@ -18,13 +18,10 @@ class Almacen(models.Model, utils.Texto):
     telefonos = models.CharField(_("Teléfonos"), max_length=50, blank=True)
     empresa = models.ForeignKey("empresa.Empresa", verbose_name=_("Empresa"), on_delete=models.CASCADE)
     activo = models.BooleanField(_("Activo"), default=True)
-
     # Configuración
     #entrada_predeterminada = models.ForeignKey("cuenta.Cuenta", on_delete=models.SET_NULL, related_name="cuenta_entrada_predeterminada", verbose_name=_("Cuenta de entrada predeterminada"), null=True, default=None, blank=True)
     #salida_predeterminada = models.ForeignKey("cuenta.Cuenta", on_delete=models.SET_NULL, related_name="cuenta_salida_predeterminada", verbose_name=_("Cuenta de salida predeterminada"), null=True, default=None, blank=True)
-
-    tags = models.CharField(blank=True, max_length=512, editable=False)
-
+    tags = models.TextField(blank=True, editable=False)
     # Audiroría
     history = HistoricalRecords()
 

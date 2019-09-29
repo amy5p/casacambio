@@ -15,16 +15,15 @@ class Empresa(models.Model, utils.Texto):
     """
     Perfil de la Empresa.
     """
-    nombre = models.CharField(_("Nombre"), max_length=256, unique=True)
-    razon_social = models.CharField(_("Razón social"), max_length=256, unique=True)
-    identificacion = models.CharField(_("Identificación"), max_length=256, unique=True)
+    nombre = models.CharField(_("Nombre"), max_length=255, unique=True)
+    razon_social = models.CharField(_("Razón social"), max_length=255, unique=True)
+    identificacion = models.CharField(_("Identificación"), max_length=255, unique=True)
     identificacion_tipo = models.CharField(_("Tipo de identificación"), max_length=20, blank=True)
     logo = models.ImageField(_("Logo"), upload_to="empresa/logo/", blank=True, height_field="logo_height", width_field="logo_width", max_length=None)
     logo_height = models.IntegerField(blank=True, null=True, default=None, editable=False)
     logo_width = models.IntegerField(blank=True, null=True, default=None, editable=False)
     # Busqueda
-    tags = models.CharField(blank=True, max_length=512, editable=False)
-
+    tags = models.TextField(blank=True, editable=False)
     # Auditoria
     history = HistoricalRecords()
 
