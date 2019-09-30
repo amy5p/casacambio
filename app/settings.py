@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    
+
     # Aplicaciones externas.
     "dal",
     "dal_select2",
     "simple_history",  # https://django-simple-history.readthedocs.io/en/latest/quick_start.html#install
-    
+
     # Aplicaciónes del proyecto.
     #"auditoria",
     "base",
@@ -66,7 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
     # Auditoria del Sistema (aplicación auditoria)
     "simple_history.middleware.HistoryRequestMiddleware",  # https://django-simple-history.readthedocs.io/en/latest/quick_start.html#install
     #'auditoria.middleware.RequestMiddleware',
@@ -185,7 +185,7 @@ USE_I18N = True
 
 USE_L10N = False
 
-USE_TZ = False
+USE_TZ = True
 
 THOUSAND_SEPARATOR = ","
 

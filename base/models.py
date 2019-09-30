@@ -64,7 +64,7 @@ class ConfiguracionCSV(models.Model):
                 raise ValidationError("Ya existe una configuración registrada.")
 
 
-        
+
 
 
 
@@ -79,7 +79,7 @@ def _set(modelo):
 
 
 class __Configuracion():
-    
+
     def __getattr__(self, name):
         return self
 
@@ -100,7 +100,7 @@ class Configuracion():
         except (BaseException) as e:
             print(e)
 
-    
+
 
 
 
@@ -123,7 +123,7 @@ def inicializacion():
         empresa.save()
     except (BaseException):
         pass
-        
+
     try:
         almacen = Almacen.objects.all()[0]
     except (IndexError):
@@ -133,7 +133,7 @@ def inicializacion():
         almacen.empresa = empresa
         almacen.save()
     except (BaseException):
-        pass 
+        pass
 
     # DOCUMENTOS PREDETERMINADOS PARA INICIAR LAS OPERACIONES.
     try:
@@ -167,10 +167,10 @@ def inicializacion():
         moneda1 = Moneda()
         moneda1.simbolo = DOP
         moneda1.nombre = _("PESO")
-        moneda1.is_principal = True 
+        moneda1.is_principal = True
         moneda1.save()
     except (BaseException):
-        pass 
+        pass
 
     try:
         moneda2 = Moneda()
@@ -178,7 +178,7 @@ def inicializacion():
         moneda2.nombre = _("DOLAR")
         moneda2.save()
     except (BaseException):
-        pass 
+        pass
 
     try:
         moneda3 = Moneda()
@@ -186,7 +186,7 @@ def inicializacion():
         moneda3.nombre = _("EURO")
         moneda3.save()
     except (BaseException):
-        pass 
+        pass
 
 
     try:
@@ -221,9 +221,9 @@ def inicializacion():
     except (BaseException):
         pass
 
-    
-    
 
-    
+
+
+
 
 #inicializacion()

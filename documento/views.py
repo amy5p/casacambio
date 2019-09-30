@@ -19,14 +19,14 @@ from fuente import utils
 
 
 # --------------------------------------------------------------
-# DOCUMENTOS 
+# DOCUMENTOS
 # --------------------------------------------------------------
 
 
 class DocumentoListView(LoginRequiredMixin, ListView, utils.Texto):
     model = Documento
-    paginate_by = 300
-    
+    paginate_by = 200
+
 
     @utils.context_decorator()
     def get_context_data(self, **kwargs):
@@ -52,7 +52,7 @@ class DocumentoListView(LoginRequiredMixin, ListView, utils.Texto):
             day = abs(int(day))
         except (ValueError, TypeError):
             day = 0
-        
+
         if (q):
             q = self.GetEtiqueta(q, False)
         else:
@@ -66,7 +66,7 @@ class DocumentoListView(LoginRequiredMixin, ListView, utils.Texto):
 
         if (year) and (month) and (day):
             date = datetime.date(year, month, day)
-            qs = qs.filter(fecha=date) 
+            qs = qs.filter(fecha=date)
         elif (year) and (month):
             qs = qs.filter(fecha__year=year, fecha__month=month)
         elif (year) and (day):
