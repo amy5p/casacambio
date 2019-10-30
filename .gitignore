@@ -11,3 +11,4 @@ mysql.cnf
 db.json
 media/*
 __backup/*
+localsettings.py
