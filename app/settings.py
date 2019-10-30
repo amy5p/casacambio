@@ -22,10 +22,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '*n++o(ivabf^8ud4m33))aoxt%6y%4nwh5_mdyn8h#pi9$5=ym'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+    import localsettings as local
+except (ImportError):
+    debug = False
+    allowed_hosts = ["*"]
+    databases = None
+else:
+    debug = local.DEBUG
+    allowed_hosts = local.ALLOWED_HOSTS
+    databases = local.DATABASES
 
-ALLOWED_HOSTS = ["*"]
+
+DEBUG = debug
+
+ALLOWED_HOSTS = allowed_hosts
 
 
 # Application definition
@@ -114,13 +125,13 @@ mysql_pythonanywhere = {
 }
 mysql_localhost = {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'inventario',
+    'NAME': 'casacambio',
     'USER': 'root',
     'PASSWORD': 'HolaMundo',
     'HOST': 'localhost',
     'PORT': '3306',
     'TEST': {
-        'NAME': 'inventario_test',
+        'NAME': 'test',
     },
 }
 
@@ -131,9 +142,12 @@ mysql_from_file = {
     },
 }
 
-DATABASES = {
-    'default': mysql_from_file,
-}
+if databases:
+    DATABASES = databases
+else:
+    DATABASES = {
+        "default": sqlite3,
+    }
 
 
 

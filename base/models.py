@@ -34,6 +34,20 @@ class Error(models.Model):
 
 
 
+class Nota(models.Model, utils.Texto):
+    """
+    Notas que podrán utilizarce en las páginas para mostrar
+    un determinado mensaje.
+    """
+    urlname = models.CharField(max_length=128, unique=False, help_text=_("Nombre de la urlpath en la que se mostrará la nota. Ej. base-index"))
+    titulo = models.CharField(_("Título"), max_length=100, help_text=_("Nombre legible"))
+    contenido = models.CharField(_("Contenido"), max_length=700)
+
+    def __str__(self):
+        return "{}: '{}'".format(self.urlname, self.titulo)
+
+
+
 class ConfiguracionGeneral(models.Model):
     """
     Registro de las configuraciones globales del Sistema.

@@ -7,8 +7,9 @@ body {
   font-family: calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
   line-height: 1;
   -webkit-text-size-adjust: none;
-  padding: 20px;
-  background: #bbb;
+  padding: 0px;
+  padding-top: 20px;
+  background: white;
 }
 
 @media screen and (max-width: 480px) {
@@ -39,10 +40,10 @@ blockquote, q {
 header {
   background: white;
   width: 100%;
-  padding-top: 20px;
+  padding-top: 5px;
 }
 header .logo img {
-  height: 90px;
+  height:45px;
   width: auto;
 }
 #heading {

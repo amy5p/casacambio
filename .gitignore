@@ -10,4 +10,4 @@ env
 mysql.cnf
 db.json
 media/*
-
+__backup/*

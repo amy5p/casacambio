@@ -87,11 +87,6 @@ class Documento(models.Model, utils.Texto):
         return reverse_lazy("documento-documento-detail", kwargs={"pk": self.pk})
 
     def clean(self, *args, **kwargs):
-        # El número del documento estará compuesto por el id del almacén y una secuencia automática única 
-        # para cada documento en dicho almacén.
-        if (self.numero == -1):
-            self.numero = self.GetSiguienteNumero(self.almacen)
-
         if (not self.monto_entrada):
             self.monto_entrada = 0
         if (not self.monto_salida):
@@ -142,8 +137,24 @@ class Documento(models.Model, utils.Texto):
             self.ganancia = 0
 
         # Etiquetas
-        tags = self.GetEtiquetas((self.numero, str(self.almacen), str(self.persona), str(self.fecha), str(self.entrada), str(self.salida), self.monto_entrada, self.monto_salida, str(self.cajero)))
+        tags = self.GetEtiquetas((str(self.almacen), str(self.persona), str(self.fecha), str(self.entrada), str(self.salida), self.monto_entrada, self.monto_salida, str(self.cajero)), False)
         self.tags += self.GetEtiqueta(self.nota, False)
+
+        # El número del documento estará compuesto por el id del almacén y una secuencia automática única 
+        # para cada documento en dicho almacén. Lo hacemos de último para que, debido al tiempo que tarda en
+        # esta validación, no vaya otra instancia que también esté creando documento, tomar este número.
+        if (self.numero == -1):
+            numero = self.GetSiguienteNumero(self.almacen)
+            # Evitamos lo más que se pueda, los duplicados. Estos pueden suceder si más de 
+            # una instancia está creando una factura en el mismo almacén al mismo tiempo.
+            for n in range(1000):
+                if Documento.objects.filter(numero=numero):
+                    numero += 1
+                    continue 
+                else:
+                    break
+            self.numero = numero
+        self.tags += " {} ".format(self.numero)
         super().clean(*args, **kwargs)
 
     def GetDetail(self, subfields=False):
@@ -333,7 +344,6 @@ class Documento(models.Model, utils.Texto):
             ganancia = (self.monto_entrada * self.entrada.moneda.tasa_compra) * factor
         return round(ganancia, 2)
 
-
     def GetSiguienteNumero(self, almacen):
         """
         Obtiene la siguiente secuencia numérica para 
@@ -342,7 +352,7 @@ class Documento(models.Model, utils.Texto):
         try:
             return Documento.objects.filter(almacen=almacen).aggregate(models.Max("numero"))["numero__max"] + 1
         except (TypeError):
-            return int("{}{:0>7}".format(almacen.id, 1))
+            return 1
 
     def GetEntradaString(self):
         if (self.entrada):
