@@ -7,7 +7,7 @@
 {% block content %}
 
     <div class="form1">
-        <form id="form1" method="POST" class="post-form">{% csrf_token %}
+        <form id="form1" method="POST" class="post-form" onsubmit="setSubmit('form1')">{% csrf_token %}
 
             {% for error in form.non_field_errors %}
                 <div class="alert alert-danger">
@@ -40,8 +40,11 @@
                     </tr>
                 </tbody>
             </table>
-
             <br>
+
+            <div id="nota1" style="background: rgba(255, 255, 0, 0.267); display: none; position: fixed; z-index: 999999; padding: 0px; margin: 0px; width: 100%; left: 0px; border: 1px dashed gray; text-align: center;">
+                <h3 style="padding: 0px">Guardando...</h3>
+            </div>
 
                 <!--
                     <tr>
@@ -109,17 +112,24 @@
             <hr style="border-top: 1px dashed gray">
             <br>
             <div style="margin: auto; width: 400px">
-                <input type="submit" value="Guardar e imprimir" style="width: 100%">
-               
+                <input id="inputsubmit1" type="submit" value="Guardar e imprimir" style="width: 100%">
             </div>
-            
         </form>
     </div>
     <br>
 
 
 
-
+    <script>
+        function setSubmit(formid) {
+            var nota = document.getElementById("nota1");
+            nota.style.display = "block";
+            var inputsubmit = document.getElementById("inputsubmit1");
+            inputsubmit.disabled = true;
+            inputsubmit.value = "Enviando. Espere...";
+            var form = document.getElementById(formid);
+        }
+    </script>
 
 
 
