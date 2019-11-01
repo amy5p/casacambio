@@ -96,7 +96,7 @@ def moneda(number, simbol="$"):
         utils.Texto().Float()
     try:
         return "{} {:,.2f}".format(simbol, float(number))
-    except (ValueError):
+    except (ValueError, TypeError):
         return ""
 
 @register.filter 
