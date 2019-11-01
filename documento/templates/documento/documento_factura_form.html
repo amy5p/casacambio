@@ -184,13 +184,12 @@
 
     <script>
 
-        window.onload = function() {
+        $('document').ready(function(){
             document.getElementById("id_almacen").selectedIndex = 1;
             calcularMontoSalida();
             actualizarTasa();
             onChangeAlmacen();
-
-        }
+        });
 
 
         // Al selecionar el almacén, se filtran solo las cuentas de dicho almacén.

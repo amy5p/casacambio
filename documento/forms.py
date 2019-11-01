@@ -117,6 +117,14 @@ class DocumentoFacturaForm(forms.ModelForm, utils.Texto):
             self.fields["tipo"].initial = conf.facturacion.tipo_documento_predeterminado
         except (BaseException) as e:
             print(e)
+        try:
+            self.fields["entrada"].initial = Cuenta.objects.get(orden=1)
+        except (BaseException) as e:
+            print(e)
+        try:
+            self.fields["salida"].initial = Cuenta.objects.get(orden=2)
+        except (BaseException) as e:
+            print(e)
 
         try:
             lastfactura = Documento.objects.filter(tipo__modo=FACTURA).order_by("-id")[0]
@@ -135,18 +143,14 @@ class DocumentoFacturaForm(forms.ModelForm, utils.Texto):
                 self.fields["persona"].initial = Persona.objects.filter(nombre__in=("GENERICO", "GENÉRICO", "generico", "genérico"))[0]
             except (BaseException) as e:
                 print(e)
+
             
-
-
     def clean(self):
         monto_entrada = self.cleaned_data["monto_entrada"]
         monto_salida = self.cleaned_data["monto_salida"]
 
         if (not monto_entrada) and (not monto_salida):
             raise ValidationError({"monto_entrada": _("Indique el monto de entrada")})
-
-        
-            
 
     def save(self, commit=True):
         instance = super().save(commit=False)
