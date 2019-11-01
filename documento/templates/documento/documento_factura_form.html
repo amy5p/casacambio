@@ -335,7 +335,13 @@
                 if (data["error"] == true) {
                     return;
                 }
-                $("#id_monto_salida").val(data["results"]);
+                var monto = data["results"];
+                if (monto > 0) {
+                    $("#id_monto_salida").val(data["results"]);
+                }
+                else {
+                    $("#id_monto_salida").val("");
+                }
             }});
         }
 
