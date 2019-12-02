@@ -332,7 +332,7 @@ class Cuenta(models.Model, utils.Texto):
 
     def clean(self):
         self.tags = self.GetEtiquetas((self.numero, self.user, self.fecha_creacion))
-        self.tags += self.cliente.tags 
+        self.tags += self.cliente.tags
 
     def Detail(self):
         return utils.Detail(self)
@@ -521,7 +521,7 @@ class Prestamo(models.Model, utils.PrestamoBase, utils.Texto):
         return reverse_lazy("prestamo-prestamo-detail", kwargs={"pk": self.pk})
 
     def clean(self):
-        self.tags = self.GetEtiquetas((self.almacen, self.cuenta.numero, self.monto, self.tasa))
+        self.tags = self.GetEtiquetas((self.almacen, self.cuenta, self.monto, self.tasa))
         self.tags += self.cliente.tags
 
     def save(self, *args, **kwargs):
