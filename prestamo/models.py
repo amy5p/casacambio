@@ -47,7 +47,7 @@ class Solicitud(models.Model, utils.Texto):
 
     # Datos extra según pedido de la Empresa.
     direccion = models.CharField(_("Dirección"), max_length=200, help_text=_("Dirección de su residencia o domicilio."))
-    estado_civil = models.CharField(_("Estado civil"), max_length=10, choices=ESTADO_CIVIL_CHOICES)
+    estado_civil = models.CharField(_("Estado civil"), max_length=11, choices=ESTADO_CIVIL_CHOICES)
     trabajo_nombre = models.CharField(_("Lugar de trabajo"), max_length=50, blank=True)
     trabajo_direccion = models.CharField(_("Dirección del trabajo"), max_length=200, blank=True)
     trabajo_telefono = models.CharField(_("Teléfono del trabajo"), max_length=20, blank=True)

@@ -108,7 +108,8 @@ class DocumentoFacturaForm(forms.ModelForm, utils.Texto):
         #self.fields["tasa_salida"].widget.attrs = {"readonly": True}
         #self.fields["monto_salida"].widget.attrs = {"readonly": True}
         
-        self.fields["monto_entrada"]
+        self.fields["monto_entrada"].widget.attrs.update({"placeholder": "0"})
+        self.fields["monto_salida"].widget.attrs.update({"placeholder": "0"})
         self.fields["entrada"].queryset = Cuenta.objects.all()
         self.fields["salida"].queryset = Cuenta.objects.all()
         self.fields["nota"].widget.attrs = {"rows": 1, "style": "width: 100%", "placeholder": _("Escriba un comentario...")}

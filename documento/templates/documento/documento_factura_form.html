@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 {% load tags %}
 
 
 {% block content %}
 
-    <div class="form1">
+    <div class="form1 sombra1">
         <form id="form1" method="POST" class="post-form" onsubmit="setSubmit('form1')">{% csrf_token %}
 
             {% for error in form.non_field_errors %}
@@ -22,21 +22,22 @@
             {% endfor %}
             
 
-            <table id="table-form" style="margin: auto">
+            <table id="table-form" class="table-form" style="margin: auto">
                 <tbody>
                     <tr>
                         <td class="r"><label for="id_almacen">{{ form.almacen.label }}:</label></td>
                         <td>{{ form.almacen }}{{ form.almacen.errors }}</td>
-                        <td class="r"><label for="id_tipo">{{ form.tipo.label }}</label></td>
-                        <td>{{ form.tipo }}{{ form.tipo.errors }}</td>
-                        <td class="r"><label for="id_fecha">{{ form.fecha.label }}:</label></td>
-                        <td>{{ form.fecha }}{{ form.fecha.errors }}</td>
-                        <td></td>
+                        <td class="r"><label for="id_persona">{{ form.persona.label }}:</label></td>
+                        <td>{{ form.persona }}{{ form.persona.errors }}</td>
                     </tr>
                     <tr>
-                        <td class="r"><label for="id_persona">{{ form.persona.label }}:</label></td>
-                        <td colspan="2">{{ form.persona }}{{ form.persona.errors }}</td>
-                        <td colspan="4">{{ form.nota }}{{ form.nota.errors }}</td>
+                        <td class="r"><label for="id_tipo">{{ form.tipo.label }}</label></td>
+                        <td>{{ form.tipo }}{{ form.tipo.errors }}</td>
+                        <td rowspan="2" colspan="2">{{ form.nota }}{{ form.nota.errors }}</td>
+                    </tr>
+                    <tr>
+                        <td class="r"><label for="id_fecha">{{ form.fecha.label }}:</label></td>
+                        <td>{{ form.fecha }}{{ form.fecha.errors }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -45,32 +46,6 @@
             <div id="nota1" style="background: rgba(255, 255, 0, 0.267); display: none; position: fixed; z-index: 999999; padding: 0px; margin: 0px; width: 100%; left: 0px; border: 1px dashed gray; text-align: center;">
                 <h3 style="padding: 0px">Guardando...</h3>
             </div>
-
-                <!--
-                    <tr>
-                        <td colspan="7" style="height: 70px; background: white"></td>
-                    </tr>
-                    <tr>
-                        <td><img src="{{ IMG_DOCUMENTO_ENTRADA }}" alt=""></td>
-                        <td class="r"><label for="id_entrada">{{ form.entrada.label }}:</label></td>
-                        <td title="{{ form.entrada.help_text }}">{{ form.entrada }}{{ form.entrada.errors }}</td>
-                        <td class="r"><label for="id_tasa_entrada">{{ form.tasa_entrada.label }}:</label></td>
-                        <td title="{{ form.tasa_entrada.help_text }}">{{ form.tasa_entrada }}{{ form.tasa_entrada.errors }}</td>
-                        <td class="r"><label for="id_monto_entrada">{{ form.monto_entrada.label }}:</label></td>
-                        <td title="{{ form.monto_entrada.help_text }}">{{ form.monto_entrada }}{{ form.monto_entrada.errors }}</td>
-                    </tr>
-                    <tr><td colspan="7" style="height: 50px; background: white;"></td></tr>
-                    <tr>
-                        <td><img src="{{ IMG_DOCUMENTO_SALIDA }}" alt=""></td>
-                        <td class="r"><label for="id_salida">{{ form.salida.label }}:</label></td>
-                        <td title="{{ form.salida.help_text }}">{{ form.salida }}{{ form.salida.errors }}</td>
-                        <td class="r"><label for="id_tasa_salida">{{ form.tasa_salida.label }}:</label></td>
-                        <td title="{{ form.tasa_salida.help_text }}">{{ form.tasa_salida }}{{ form.tasa_salida.errors }}</td>
-                        <td class="r enfasis"><label for="id_monto_salida">{{ form.monto_salida.label }}:</label></td>
-                        <td class="enfasis" title="{{ form.monto_salida.help_text }}">{{ form.monto_salida }}{{ form.monto_salida.errors }}</td>
-                    </tr>
-
-                -->
 
             <table style="margin: auto;" class="table-form">
                 <tbody>
@@ -144,11 +119,23 @@
 
 
     <style>
-        #table-form .r {
+
+        .form1 {
+            width: 900px;
+            border: 1px solid gray;
+            margin: auto;
+        }
+
+        .table-form {
+            width: 100%;
+            background: none;
+        }
+
+        .table-form .r {
             text-align: right;
         }
 
-        #table-form tr:hover {
+        .table-form tr:hover {
             background: #eee !important;
         }
 
